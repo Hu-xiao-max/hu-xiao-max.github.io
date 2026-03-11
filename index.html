@@ -1,201 +1,334 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-<meta charset="utf-8">
-<title>hux_cv_site</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>hux_cv_site</title>
+  <style>
+    :root {
+      --primary: #2c3e50;
+      --accent: #3498db;
+      --text: #333;
+      --text-light: #666;
+      --bg: #f8f9fa;
+      --card: #fff;
+      --border: #e0e0e0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 40px auto;
+      background: var(--card);
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    header {
+      background: var(--primary);
+      color: #fff;
+      padding: 48px 48px 40px;
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
+
+    header img {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .header-info h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .header-info .contact {
+      font-size: 0.95rem;
+      opacity: 0.9;
+      line-height: 1.8;
+    }
+
+    .header-info .contact a {
+      color: #8ecfff;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .header-info .contact a:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    .content {
+      padding: 36px 48px 48px;
+    }
+
+    section {
+      margin-bottom: 32px;
+    }
+
+    section:last-child {
+      margin-bottom: 0;
+    }
+
+    section h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .entry {
+      margin-bottom: 16px;
+      padding-left: 16px;
+      border-left: 3px solid var(--border);
+      transition: border-color 0.2s;
+    }
+
+    .entry:hover {
+      border-left-color: var(--accent);
+    }
+
+    .entry:last-child {
+      margin-bottom: 0;
+    }
+
+    .entry .title {
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .entry .subtitle {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-top: 2px;
+    }
+
+    .award-list,
+    .service-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .award-list li,
+    .service-list li {
+      position: relative;
+      padding: 6px 0 6px 20px;
+      font-size: 0.92rem;
+      color: var(--text-light);
+    }
+
+    .award-list li::before,
+    .service-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 14px;
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .pub-item {
+      padding: 8px 0;
+      font-size: 0.92rem;
+      color: var(--text-light);
+      line-height: 1.7;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .pub-item:last-child {
+      border-bottom: none;
+    }
+
+    .pub-item b {
+      color: var(--text);
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        margin: 0;
+        border-radius: 0;
+      }
+
+      header {
+        flex-direction: column;
+        text-align: center;
+        padding: 32px 24px;
+      }
+
+      .content {
+        padding: 24px;
+      }
+
+      header img {
+        width: 120px;
+        height: 120px;
+      }
+    }
+  </style>
 </head>
 
-
 <body>
-    <h1>Xiao Hu's CV</s></h1>
-    <img src="./images/hx.png" width="258" height="258" />
+  <div class="container">
+    <header>
+      <img src="./images/hx.png" alt="Jeremy Hu" />
+      <div class="header-info">
+        <h1>Jeremy Hu's CV</h1>
+        <div class="contact">
+          <a href="https://hu-xiao-max.github.io/video.xiaohu/">Project Video</a><br>
+          Tel:+1 857-788-6299<br>
+          Email:xiao.h1@northeastern.edu
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <section>
+        <h2>Eduction</h2>
+
+        <div class="entry">
+          <div class="title">ShenZhen University</div>
+          <div class="subtitle">Intelligent system</div>
+        </div>
+
+        <div class="entry">
+          <div class="title">South China University of Technology</div>
+          <div class="subtitle">Control Science and engineering</div>
+        </div>
+
+        <div class="entry">
+          <div class="title">Northeastern University</div>
+          <div class="subtitle">Data & System (PhD, Fellowship)</div>
+        </div>
+
+        <div class="entry">
+          <div class="title">Harvard University</div>
+          <div class="subtitle">Summer School</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Work</h2>
+
+        <div class="entry">
+          <div class="title">IDEA Guangdong-Hong Kong-Macao Greater Bay Area Digital Economy Research Institute</div>
+          <div class="subtitle">2021-2022 | Robotics Researcher (Intern) mentor: Dr. Zhang Lei (IEEE Fellow)</div>
+        </div>
+
+        <div class="entry">
+          <div class="title">Xpeng Robotics</div>
+          <div class="subtitle">2022-2023 | Robotic Arm Algorithm R&D Engineer (Intern) mentor: Dr. Chen Xiangyu</div>
+        </div>
+
+        <div class="entry">
+          <div class="title">Tencent Robotics X</div>
+          <div class="subtitle">2023-2024 | Assistant Researcher</div>
+        </div>
+
+        <div class="entry">
+          <div class="title">Pudu Robotics X Lab</div>
+          <div class="subtitle">2024-2025 | Robotics Algorithm Engineer</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Award</h2>
+        <ul class="award-list">
+          <li>2018 China Robot Competition Dance Group First Prize</li>
+          <li>2018 National College Student Mathematical Modeling Competition Provincial First Prize</li>
+          <li>2019 National College Student Electronic Design Competition Provincial First Prize</li>
+          <li>2017 China Engineering Robot Competition Narrow Foot Race Group Second Prize</li>
+          <li>Shenzhen University Graduate First-class Scholarship</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Service</h2>
+        <ul class="service-list">
+          <li>Vice Chair of 2026 IEEE Summit</li>
+          <li><b>Reviewer:</b>
+            ICRA,
+            IROS,
+            IEEE Transactions on Human-Machine Systems,
+            ACM International Conference on Human-Robot Interaction,
+            IEEE MIT Undergraduate Research Technology Conference,
+            IEEE International Conference on Intelligent Reality
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Publication</h2>
+
+        <div class="pub-item">
+          <b>Xiao Hu</b>, et al. Teleoperation of Semi-humanoid
+          with dexterous hand. (i3CE 2025)
+        </div>
+        <div class="pub-item">
+          <b>Xiao Hu</b>, et al. Tactile-based reinforcement learning for adaptive grasping under observation uncertainties.
+          (ICRA 2025).
+        </div>
+        <div class="pub-item">
+          <b>Xiao Hu</b>, et al. Learning from Watching: Scalable Extraction of Manipulation Trajectories from Human Videos.
+          (RSS Workshop2025).
+        </div>
+        <div class="pub-item">
+          Y. Wang, <b>Xiao Hu</b>, et al. DR-VPR: Dual-Branch Rotation-Robust Visual Place Recognition for Dynamic Environments.
+          (Automation underreview).
+        </div>
+        <div class="pub-item">
+          <b>Xiao Hu</b>. Autonomous positioning and walking trajectory planning method for
+          construction robots. Computer calculate 2021.
+        </div>
+        <div class="pub-item">
+          <b>Xiao Hu</b>, et al. Seeing Points Doing it: Pixel-point State for Real-World RL. (submitted to RSS 2026)
+        </div>
+        <div class="pub-item">
+          <b>Xiao Hu</b>, et al. UniPrototype: Human-Robot Skill Learning with Uniform Prototypes. (submitted to IROS 2026)
+        </div>
+        <div class="pub-item">
+          X. Xiao, <b>Xiao Hu</b>, et al. CausalGDP: Causality-Guided Diffusion Policies for Reinforcement Learning. (submitted to IROS 2026)
+        </div>
+        <div class="pub-item">
+          X. Li, Y. Wang, <b>Xiao Hu</b>, et al. When to Personalize Household Object Search: A Rigidity-Gated Hybrid Policy. (submitted to IROS 2026)
+        </div>
+        <div class="pub-item">
+          T. Zhou, F. Xu, J. Wu, <b>Xiao Hu</b>, et al. Non-Local Inference for Occluded DLO Manipulation via Tactile-Conditioned Diffusion Policies. (submitted to IROS 2026)
+        </div>
+        <div class="pub-item">
+          Y. Wang, C. Wang, Z. Teng, <b>Xiao Hu</b>, et al. Thinking on Its Feet: Terrain-Aware Hierarchical Control with Proprioceptive Feedback for Humanoid Navigation. (submitted to IROS 2026)
+        </div>
+      </section>
+    </div>
+  </div>
 </body>
-
-
-<body>
-    <br><!-- 换行 -->
-    <a href="https://hu-xiao-max.github.io/video.xiaohu/">Project Video</a>
-    <br>
-    Tel:+1 857-788-6299 | E-mail:xiao.h1@northeastern.edu
-    
-</body>
-
-
-<!-- <body>
-
-    <b>加粗文本</b><br><br>
-    <i>斜体文本</i><br><br>
-    <code>电脑自动输出</code><br><br>
-    这是 <sub> 下标</sub> 和 <sup> 上标</sup>
-    
-</body> -->
-
-<!-- 背景颜色和字体颜色 -->
-<!-- <body style="background-color:white;">
-
-</body>
-
-<body>
-    <h2 style="background-color:red;">这是一个标题</h2>
-    <p style="background-color:green;">这是一个段落。</p>
-</body> -->
-
-
-<!-- 居中对齐 -->
-<!-- <body>
-
-    <h1 style="text-align:center;">居中对齐的标题</h1>
-    <p>这是一个段落。</p>
-    
-</body> -->
-
-<!-- 教育 -->
-
-
-<body>
-    <h2>Eduction</h2>
-    <hr>
-    <b>Henan Polytechnic University </b>|2016-2020 | Bachelor<br>
-    Intelligent system<br>
-    <br>
-    
-    <b>ShenZhen University </b>|2021-2024 |Master<br>
-    Intelligent system<br>
-    <br>
-
-    <b>South China University of Technology </b>|2024-2025 |PhD<br>
-    Control Science and engineering<br>
-    <br>
-
-    <b>Northeastern University</b>|2025-Now (Fellowship) |PhD <br>
-    Data & System<br>
-    <br>
-
-    <strong>Mentor</strong><br>
-    <hr>
-    XiangSheng Chen(Academician of the Chinese Academy of Engineering)<br>
-    Lei Zhang(IEEE Fellow)<br>
-    H. Ma<br>
-    Gilbert Ye<br>
-
-    
-
-    
-
-</body>
-
-
-<body>
-    <h2>Work</h2>
-    <hr>
-    <b>IDEA Guangdong-Hong Kong-Macao Greater Bay Area Digital Economy Research Institute </b> <br> 
-    2021-2022 | Robotics Researcher (Intern) mentor: Dr. Zhang Lei <br> <br>
-
-    <b>Xpeng Robotics </b> <br>
-    2022-2023 | Robotic Arm Algorithm R&D Engineer (Intern) mentor: Dr. Chen Xiangyu
-    <br> <br>
-
-    <b>Tencent Robotics X </b> <br>
-    2023-2024 | Assistant Researcher (Intern)  mentor: Dr. Huang Bidan
-
-    <br> <br>
-
-    <b>Pudu Robotics X Lab </b> <br>
-    2024-2025 | Robotics Algorithm Engineer(full-time)
-
-</body>
-
-<h2>Project</h2>
-<hr>
-<p style="font-family:arial;color:blue;font-size:20px;">Dexterous Manipulation Based on Tactile Sensing</p>
-2023.6-now<br>
-Conducting dexterous manipulation：<br>
-&deg;Tactile-based grasping.<br>
-&deg;Migration to real robot.<br>
-&deg;Sim2real parameter optimization and adjustment.<br>
-&deg;Reinforcement learning in Mujoco using tactile feedback.<br>
-&deg;Persistent testing and maintenance of tactile sensors.<br>
-
-
-<p style="font-family:arial;color:blue;font-size:20px;">PointnetGPD Grasping Algorithm Closed-loop</p>
-2022.6-2022.12<br>
-To implement closed-loop grasping network, it is necessary to create a grasping dataset for the corresponding scene, and the responsible work is as follows：<br>
-&deg;Develop automatic object image capturing function based on Kinova Jaco2.<br>
-&deg;Set control points for photos and use Nerf to generate 3D models of objects.<br>
-&deg;Generate grasping annotations for the generated 3D models using GPD.<br>
-&deg;Develop simulated depth map generation function based on pybullet.<br>
-&deg;Automatically combine the above data into a dataset.<br>
-
-<p style="font-family:arial;color:blue;font-size:20px;">Grasping Filter</p>
-2022.12-2023.03<br>
-Addressed the issue of repetitive components in both positive and negative samples within the Insight 
-    grasping dataset by designing a customized filtering mechanism:<br>
-&deg;Developed a large-scale grasp label filtering system based on Isaac Gym to enhance data diversity 
-    and efficiency.<br>
-&deg;Designed a shape-based filter algorithm to identify and eliminate geometrically redundant 
-    objects across samples.<br>
-
-
-<p style="font-family:arial;color:blue;font-size:20px;">AnyGrasp</p>
-2023.03-2023.04<br>
-AnyGrasp:<br>
-&deg;Operated the Flexiv robotic arm to perform grasping experiments.<br>
-&deg;Integrated and implemented the GraspNet framework for perception-based grasp planning.<br>
-&deg;Developed a custom annotation tool for grasp labeling within the GraspNet framework.<br>
-
-
-<p style="font-family:arial;color:blue;font-size:20px;">Robotics Center Platform Development</p>
-2022.06-2023.01<br>
-Contributed to the development of the Robotics Center platform:<br>
-&deg;Developed an object grasping demo for the UR robotic arm using the YOLO algorithm.<br>
-&deg;Built a simulation environment and interactive demos using the V-REP platform.<br>
-
-
-<p style="font-family:arial;color:blue;font-size:20px;">Robotics Competition</p>
-2017.06-2019.08<br>
-<b>Team Leader</b> – Responsible for overall coordination and technical execution:<br>
-&deg;Designed and modeled robot structural components using SolidWorks.<br>
-&deg;Procured materials based on CAD designs; performed laser cutting, bending, and assembly of aluminum 
-    components and mechanical parts.<br>
-&deg;Programmed and debugged robot actions and motion sequences.<br>
-&deg;Conducted on-site debugging during competitions; resolved emergencies such as control 
-    board failures and hardware malfunctions under time pressure.<br>
-
-
-<body>
-    <h2>Award</h2>
-    <hr> 2018 China Robot Competition Dance Group First Prize<br> 
-    2018 National College Student Mathematical Modeling Competition Provincial First Prize<br> 
-    2019 National College Student Electronic Design Competition Provincial First Prize<br> 
-    2017 China Engineering Robot Competition Narrow Foot Race Group Second Prize<br> 
-    Shenzhen University Graduate First-class Scholarship<br>
-
-</body>
-
-<body>
-    <h2>Service</h2>
-    <hr>
-    Reviewer of ICRA IROS
-</body>
-
-
-<body>
-    <h2>Publication</h2>
-    <hr>
-    <b>Xiao Hu</b>, & Gilbert Ye. Teleoperation of Semi-humanoid
-    with dexterous hand. i3CE 2025 <br>
-    <b>Xiao Hu</b>, & Gilbert Ye. (2025). Tactile-based reinforcement learning for adaptive grasping under observation uncertainties. 
-    IEEE International Conference on Robotics and Automation (ICRA 2025).<br>
-    <b>Xiao Hu</b>. Autonomous positioning and walking trajectory planning method for 
-    construction robots. Computer Campus 2021.<br>
-    
-
-    
-
-
-</body>
-
-
 
 </html>
