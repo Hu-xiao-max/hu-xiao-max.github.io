@@ -4,331 +4,724 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>hux_cv_site</title>
+  <title>Xiao Hu — Robotics Researcher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #2c3e50;
-      --accent: #3498db;
-      --text: #333;
-      --text-light: #666;
-      --bg: #f8f9fa;
-      --card: #fff;
-      --border: #e0e0e0;
+      --primary: #0f172a;
+      --accent: #3b82f6;
+      --accent-light: #60a5fa;
+      --text: #1e293b;
+      --text-secondary: #64748b;
+      --bg: #ffffff;
+      --bg-alt: #f8fafc;
+      --border: #e2e8f0;
+      --radius: 16px;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       color: var(--text);
       background: var(--bg);
-      line-height: 1.6;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .container {
-      max-width: 860px;
-      margin: 40px auto;
-      background: var(--card);
-      border-radius: 12px;
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+
+    nav.scrolled { box-shadow: 0 1px 12px rgba(0,0,0,0.06); }
+
+    nav .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .brand {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    nav .nav-links { display: flex; gap: 28px; }
+
+    nav .nav-links a {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+      letter-spacing: 0.3px;
+    }
+
+    nav .nav-links a:hover { color: var(--accent); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 160px 32px 100px;
+      text-align: center;
+      background: linear-gradient(165deg, #0f172a 0%, #1e3a5f 50%, #2563eb 100%);
+      color: #fff;
+      position: relative;
       overflow: hidden;
     }
 
-    header {
-      background: var(--primary);
-      color: #fff;
-      padding: 48px 48px 40px;
-      display: flex;
-      align-items: center;
-      gap: 36px;
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 70%, rgba(59,130,246,0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 30%, rgba(96,165,250,0.1) 0%, transparent 50%);
+      pointer-events: none;
     }
 
-    header img {
-      width: 140px;
-      height: 140px;
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero .avatar {
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
-      border: 4px solid rgba(255, 255, 255, 0.3);
+      border: 4px solid rgba(255,255,255,0.25);
       object-fit: cover;
-      flex-shrink: 0;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
     }
 
-    .header-info h1 {
-      font-size: 2rem;
-      font-weight: 700;
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
       margin-bottom: 12px;
-      letter-spacing: 0.5px;
     }
 
-    .header-info .contact {
-      font-size: 0.95rem;
-      opacity: 0.9;
-      line-height: 1.8;
+    .hero .tagline {
+      font-size: 1.15rem;
+      font-weight: 400;
+      opacity: 0.85;
+      max-width: 600px;
+      margin: 0 auto 32px;
     }
 
-    .header-info .contact a {
-      color: #8ecfff;
+    .hero .contact-row {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .hero .contact-row a,
+    .hero .contact-row span {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.8);
       text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       transition: color 0.2s;
     }
 
-    .header-info .contact a:hover {
-      color: #fff;
-      text-decoration: underline;
+    .hero .contact-row a:hover { color: #fff; }
+
+    /* ── Sections ── */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 32px;
     }
 
-    .content {
-      padding: 36px 48px 48px;
+    .section-alt { background: var(--bg-alt); }
+
+    .section-alt .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 32px;
     }
 
-    section {
-      margin-bottom: 32px;
-    }
-
-    section:last-child {
-      margin-bottom: 0;
-    }
-
-    section h2 {
-      font-size: 1.25rem;
+    .section-title {
+      font-size: 1.6rem;
       font-weight: 700;
       color: var(--primary);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      padding-bottom: 10px;
-      border-bottom: 2px solid var(--accent);
-      margin-bottom: 20px;
+      margin-bottom: 8px;
     }
 
-    .entry {
-      margin-bottom: 16px;
-      padding-left: 16px;
-      border-left: 3px solid var(--border);
-      transition: border-color 0.2s;
+    .section-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
     }
 
-    .entry:hover {
-      border-left-color: var(--accent);
+    /* ── Experience cards ── */
+    .exp-grid { display: flex; flex-direction: column; gap: 20px; }
+
+    .exp-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg);
+      transition: box-shadow 0.25s, transform 0.25s;
     }
 
-    .entry:last-child {
-      margin-bottom: 0;
+    .exp-card:hover {
+      box-shadow: 0 8px 30px rgba(0,0,0,0.07);
+      transform: translateY(-2px);
     }
 
-    .entry .title {
+    .exp-card .logo-link { flex-shrink: 0; }
+
+    .exp-card .company-logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      object-fit: contain;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: transform 0.2s;
+    }
+
+    .exp-card .company-logo:hover { transform: scale(1.06); }
+
+    .exp-card .exp-info { flex: 1; }
+
+    .exp-card .exp-role {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .exp-card .exp-company {
+      font-size: 0.88rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .exp-card .exp-meta {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      margin-top: 6px;
+    }
+
+    .exp-card .exp-date {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      white-space: nowrap;
+      margin-top: 4px;
+    }
+
+    /* ── Education timeline ── */
+    .edu-timeline { display: flex; flex-direction: column; gap: 0; position: relative; padding-left: 28px; }
+
+    .edu-timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .edu-item {
+      position: relative;
+      padding: 12px 0 12px 0;
+    }
+
+    .edu-item::before {
+      content: '';
+      position: absolute;
+      left: -25px;
+      top: 20px;
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      border: 3px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+
+    .section-alt .edu-item::before { border-color: var(--bg-alt); }
+
+    .edu-item .edu-school {
       font-weight: 600;
       font-size: 1rem;
       color: var(--text);
     }
 
-    .entry .subtitle {
+    .edu-item .edu-degree {
       font-size: 0.9rem;
-      color: var(--text-light);
+      color: var(--text-secondary);
+    }
+
+    /* ── Publication list ── */
+    .pub-list { display: flex; flex-direction: column; gap: 0; }
+
+    .pub-entry {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      display: flex;
+      gap: 12px;
+    }
+
+    .pub-entry:last-child { border-bottom: none; }
+
+    .pub-num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-alt);
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
       margin-top: 2px;
     }
 
-    .award-list,
-    .service-list {
-      list-style: none;
-      padding: 0;
+    .section-alt .pub-num { background: var(--bg); }
+
+    .pub-entry b { color: var(--text); }
+
+    .pub-venue {
+      display: inline-block;
+      background: #eff6ff;
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-left: 4px;
+      vertical-align: middle;
     }
 
-    .award-list li,
-    .service-list li {
+    .pub-entry.has-gif {
+      flex-wrap: wrap;
+    }
+
+    .pub-gif-wrap {
+      flex: 0 0 100%;
+      padding-left: 40px;
+      padding-top: 10px;
+    }
+
+    .pub-gif-wrap img {
+      width: 280px;
+      max-width: 100%;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      cursor: pointer;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .pub-gif-wrap img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+    }
+
+    .pub-gif-badge {
+      display: inline-block;
+      background: #f0fdf4;
+      color: #16a34a;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .pub-divider {
+      border: none;
+      border-top: 2px dashed var(--border);
+      margin: 20px 0 12px;
+    }
+
+    /* ── Awards & Service ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .list-card {
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg);
+    }
+
+    .list-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--primary);
+    }
+
+    .list-card ul { list-style: none; padding: 0; }
+
+    .list-card li {
       position: relative;
-      padding: 6px 0 6px 20px;
-      font-size: 0.92rem;
-      color: var(--text-light);
+      padding: 8px 0 8px 20px;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
     }
 
-    .award-list li::before,
-    .service-list li::before {
+    .list-card li::before {
       content: '';
       position: absolute;
       left: 0;
-      top: 14px;
-      width: 8px;
-      height: 8px;
+      top: 15px;
+      width: 7px;
+      height: 7px;
       background: var(--accent);
       border-radius: 50%;
     }
 
-    .pub-item {
-      padding: 8px 0;
-      font-size: 0.92rem;
-      color: var(--text-light);
-      line-height: 1.7;
-      border-bottom: 1px solid #f0f0f0;
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 40px 32px;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
     }
 
-    .pub-item:last-child {
-      border-bottom: none;
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
     }
 
-    .pub-item b {
-      color: var(--text);
+    footer a:hover { text-decoration: underline; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .hero { padding: 140px 24px 72px; }
+      .hero h1 { font-size: 2rem; }
+      .hero .tagline { font-size: 1rem; }
+      .section, .section-alt .section { padding: 56px 20px; }
+      .two-col { grid-template-columns: 1fr; gap: 20px; }
+      .exp-card { flex-direction: column; align-items: center; text-align: center; }
+      nav .nav-links { gap: 16px; }
+      nav .nav-links a { font-size: 0.8rem; }
+      .hero .contact-row { flex-direction: column; gap: 10px; }
     }
 
-    @media (max-width: 640px) {
-      .container {
-        margin: 0;
-        border-radius: 0;
-      }
-
-      header {
-        flex-direction: column;
-        text-align: center;
-        padding: 32px 24px;
-      }
-
-      .content {
-        padding: 24px;
-      }
-
-      header img {
-        width: 120px;
-        height: 120px;
-      }
+    @media (max-width: 480px) {
+      nav .nav-links { gap: 10px; }
+      .hero h1 { font-size: 1.6rem; }
+      .hero .avatar { width: 110px; height: 110px; }
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <header>
-      <img src="./images/hx.png" alt="Jeremy Hu" />
-      <div class="header-info">
-        <h1>Jeremy Hu's CV</h1>
-        <div class="contact">
-          <a href="https://hu-xiao-max.github.io/video.xiaohu/">Project Video</a><br>
-          Tel:+1 857-788-6299<br>
-          Email:xiao.h1@northeastern.edu
-        </div>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a class="brand" href="#">Xiao Hu</a>
+      <div class="nav-links">
+        <a href="#experience">Experience</a>
+        <a href="#education">Education</a>
+        <a href="#publications">Publications</a>
+        <a href="#more">Awards</a>
       </div>
-    </header>
+    </div>
+  </nav>
 
-    <div class="content">
-      <section>
-        <h2>Eduction</h2>
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <img class="avatar" src="./images/hx.png" alt="Xiao Hu">
+      <h1>Xiao Hu</h1>
+      <p class="tagline">Robotics Researcher — PhD at Northeastern University<br>Reinforcement Learning · Manipulation · Human-Robot Interaction</p>
+      <div class="contact-row">
+        <a href="mailto:xiao.h1@northeastern.edu">&#9993; xiao.h1@northeastern.edu</a>
+        <span>&#9742; +1 857-788-6299</span>
+        <a href="https://hu-xiao-max.github.io/video.xiaohu/" target="_blank" rel="noopener">&#9654; Project Videos</a>
+      </div>
+    </div>
+  </section>
 
-        <div class="entry">
-          <div class="title">ShenZhen University</div>
-          <div class="subtitle">Intelligent system</div>
-        </div>
+  <!-- Experience -->
+  <div class="section-alt">
+    <div class="section" id="experience">
+      <h2 class="section-title">Experience</h2>
+      <p class="section-subtitle">Industry research & engineering roles in robotics</p>
+      <div class="exp-grid">
 
-        <div class="entry">
-          <div class="title">South China University of Technology</div>
-          <div class="subtitle">Control Science and engineering</div>
-        </div>
-
-        <div class="entry">
-          <div class="title">Northeastern University</div>
-          <div class="subtitle">Data & System (PhD, Fellowship)</div>
-        </div>
-
-        <div class="entry">
-          <div class="title">Harvard University</div>
-          <div class="subtitle">Summer School</div>
-        </div>
-      </section>
-
-      <section>
-        <h2>Work</h2>
-
-        <div class="entry">
-          <div class="title">IDEA Guangdong-Hong Kong-Macao Greater Bay Area Digital Economy Research Institute</div>
-          <div class="subtitle">2021-2022 | Robotics Researcher (Intern) mentor: Dr. Zhang Lei (IEEE Fellow)</div>
-        </div>
-
-        <div class="entry">
-          <div class="title">Xpeng Robotics</div>
-          <div class="subtitle">2022-2023 | Robotic Arm Algorithm R&D Engineer (Intern) mentor: Dr. Chen Xiangyu</div>
+        <div class="exp-card">
+          <a class="logo-link" href="https://www.pudurobotics.com/en/products?tab=xlab" target="_blank" rel="noopener">
+            <img class="company-logo" src="./images/pudu.svg" alt="Pudu Robotics">
+          </a>
+          <div class="exp-info">
+            <div class="exp-role">Robotics Algorithm Engineer</div>
+            <div class="exp-company">Pudu Robotics — X Lab</div>
+            <div class="exp-meta">Robotics algorithm R&D</div>
+          </div>
+          <div class="exp-date">2024 – 2025</div>
         </div>
 
-        <div class="entry">
-          <div class="title">Tencent Robotics X</div>
-          <div class="subtitle">2023-2024 | Assistant Researcher</div>
+        <div class="exp-card">
+          <a class="logo-link" href="https://roboticsx.tencent.com/#/" target="_blank" rel="noopener">
+            <img class="company-logo" src="./images/tencent.svg" alt="Tencent">
+          </a>
+          <div class="exp-info">
+            <div class="exp-role">Assistant Researcher</div>
+            <div class="exp-company">Tencent — Robotics X</div>
+            <div class="exp-meta">Research on robotic manipulation and learning</div>
+          </div>
+          <div class="exp-date">2023 – 2024</div>
         </div>
 
-        <div class="entry">
-          <div class="title">Pudu Robotics X Lab</div>
-          <div class="subtitle">2024-2025 | Robotics Algorithm Engineer</div>
+        <div class="exp-card">
+          <a class="logo-link" href="https://www.xpeng.com/" target="_blank" rel="noopener">
+            <img class="company-logo" src="./images/xpeng.svg" alt="XPeng">
+          </a>
+          <div class="exp-info">
+            <div class="exp-role">Robotic Arm Algorithm R&D Engineer</div>
+            <div class="exp-company">Xpeng Robotics (Intern)</div>
+            <div class="exp-meta">Mentor: Dr. Chen Xiangyu</div>
+          </div>
+          <div class="exp-date">2022 – 2023</div>
         </div>
-      </section>
 
-      <section>
-        <h2>Award</h2>
-        <ul class="award-list">
-          <li>2018 China Robot Competition Dance Group First Prize</li>
-          <li>2018 National College Student Mathematical Modeling Competition Provincial First Prize</li>
-          <li>2019 National College Student Electronic Design Competition Provincial First Prize</li>
-          <li>2017 China Engineering Robot Competition Narrow Foot Race Group Second Prize</li>
-          <li>Shenzhen University Graduate First-class Scholarship</li>
-        </ul>
-      </section>
+        <div class="exp-card">
+          <a class="logo-link" href="https://github.com/idea-research" target="_blank" rel="noopener">
+            <img class="company-logo" src="./images/idea.svg" alt="IDEA">
+          </a>
+          <div class="exp-info">
+            <div class="exp-role">Robotics Researcher</div>
+            <div class="exp-company">IDEA — Greater Bay Area Digital Economy Research Institute (Intern)</div>
+            <div class="exp-meta">Mentor: Dr. Zhang Lei (IEEE Fellow)</div>
+          </div>
+          <div class="exp-date">2021 – 2022</div>
+        </div>
 
-      <section>
-        <h2>Service</h2>
-        <ul class="service-list">
-          <li>Vice Chair of 2026 IEEE Summit</li>
-          <li><b>Reviewer:</b>
-            ICRA,
-            IROS,
-            IEEE Transactions on Human-Machine Systems,
-            ACM International Conference on Human-Robot Interaction,
-            IEEE MIT Undergraduate Research Technology Conference,
-            IEEE International Conference on Intelligent Reality
-          </li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>Publication</h2>
-
-        <div class="pub-item">
-          <b>Xiao Hu</b>, et al. Teleoperation of Semi-humanoid
-          with dexterous hand. (i3CE 2025)
-        </div>
-        <div class="pub-item">
-          <b>Xiao Hu</b>, et al. Tactile-based reinforcement learning for adaptive grasping under observation uncertainties.
-          (ICRA 2025).
-        </div>
-        <div class="pub-item">
-          <b>Xiao Hu</b>, et al. Learning from Watching: Scalable Extraction of Manipulation Trajectories from Human Videos.
-          (RSS Workshop2025).
-        </div>
-        <div class="pub-item">
-          Y. Wang, <b>Xiao Hu</b>, et al. DR-VPR: Dual-Branch Rotation-Robust Visual Place Recognition for Dynamic Environments.
-          (Automation underreview).
-        </div>
-        <div class="pub-item">
-          <b>Xiao Hu</b>. Autonomous positioning and walking trajectory planning method for
-          construction robots. Computer calculate 2021.
-        </div>
-        <div class="pub-item">
-          <b>Xiao Hu</b>, et al. Seeing Points Doing it: Pixel-point State for Real-World RL. (submitted to RSS 2026)
-        </div>
-        <div class="pub-item">
-          <b>Xiao Hu</b>, et al. UniPrototype: Human-Robot Skill Learning with Uniform Prototypes. (submitted to IROS 2026)
-        </div>
-        <div class="pub-item">
-          X. Xiao, <b>Xiao Hu</b>, et al. CausalGDP: Causality-Guided Diffusion Policies for Reinforcement Learning. (submitted to IROS 2026)
-        </div>
-        <div class="pub-item">
-          X. Li, Y. Wang, <b>Xiao Hu</b>, et al. When to Personalize Household Object Search: A Rigidity-Gated Hybrid Policy. (submitted to IROS 2026)
-        </div>
-        <div class="pub-item">
-          T. Zhou, F. Xu, J. Wu, <b>Xiao Hu</b>, et al. Non-Local Inference for Occluded DLO Manipulation via Tactile-Conditioned Diffusion Policies. (submitted to IROS 2026)
-        </div>
-        <div class="pub-item">
-          Y. Wang, C. Wang, Z. Teng, <b>Xiao Hu</b>, et al. Thinking on Its Feet: Terrain-Aware Hierarchical Control with Proprioceptive Feedback for Humanoid Navigation. (submitted to IROS 2026)
-        </div>
-      </section>
+      </div>
     </div>
   </div>
+
+  <!-- Education -->
+  <div class="section" id="education">
+    <h2 class="section-title">Education</h2>
+    <p class="section-subtitle">Academic background</p>
+    <div class="edu-timeline">
+      <div class="edu-item">
+        <div class="edu-school">Harvard University</div>
+        <div class="edu-degree">Summer School</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-school">Northeastern University</div>
+        <div class="edu-degree">Data & System (PhD Fellowship)</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-school">South China University of Technology</div>
+        <div class="edu-degree">Control Science and Engineering</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-school">Shenzhen University</div>
+        <div class="edu-degree">Intelligent System</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Publications -->
+  <div class="section-alt">
+    <div class="section" id="publications">
+      <h2 class="section-title">Publications</h2>
+      <p class="section-subtitle">Selected papers in robotics and reinforcement learning</p>
+      <div class="pub-list" id="pub-list"></div>
+    </div>
+  </div>
+
+  <!-- Awards & Service -->
+  <div class="section" id="more">
+    <h2 class="section-title">Awards &amp; Service</h2>
+    <p class="section-subtitle">Recognition and academic contributions</p>
+    <div class="two-col">
+      <div class="list-card">
+        <h3>Awards</h3>
+        <ul>
+          <li>2018 China Robot Competition — Dance Group First Prize</li>
+          <li>2018 National College Student Mathematical Modeling — Provincial First Prize</li>
+          <li>2019 National College Student Electronic Design — Provincial First Prize</li>
+          <li>2017 China Engineering Robot Competition — Narrow Foot Race Second Prize</li>
+          <li>Shenzhen University Graduate First-class Scholarship</li>
+        </ul>
+      </div>
+      <div class="list-card">
+        <h3>Academic Service</h3>
+        <ul>
+          <li>Vice Chair of 2026 IEEE Summit</li>
+          <li>Reviewer: ICRA, IROS</li>
+          <li>Reviewer: IEEE Trans. on Human-Machine Systems</li>
+          <li>Reviewer: ACM Intl. Conf. on Human-Robot Interaction</li>
+          <li>Reviewer: IEEE MIT Undergrad Research Technology Conf.</li>
+          <li>Reviewer: IEEE Intl. Conf. on Intelligent Reality</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2026 Xiao Hu &middot; Built with care &middot;
+    <a href="mailto:xiao.h1@northeastern.edu">Contact</a>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    /**
+     * ── Publication data ──
+     * gif: 填写 gif 文件路径即可，有 gif 的自动排到前面并显示预览。
+     *      留空或不写则排到后面。
+     *
+     * 示例: gif: './images/pub_teleoperation.gif'
+     */
+    const publications = [
+      {
+        authors: '<b>Xiao Hu</b>, et al.',
+        title: 'Teleoperation of Semi-humanoid with Dexterous Hand.',
+        venue: 'i3CE 2025',
+        gif: ''
+      },
+      {
+        authors: '<b>Xiao Hu</b>, et al.',
+        title: 'Tactile-based Reinforcement Learning for Adaptive Grasping under Observation Uncertainties.',
+        venue: 'ICRA 2025',
+        gif: ''
+      },
+      {
+        authors: '<b>Xiao Hu</b>, et al.',
+        title: 'Learning from Watching: Scalable Extraction of Manipulation Trajectories from Human Videos.',
+        venue: 'RSS Workshop 2025',
+        gif: ''
+      },
+      {
+        authors: 'Y. Wang, <b>Xiao Hu</b>, et al.',
+        title: 'DR-VPR: Dual-Branch Rotation-Robust Visual Place Recognition for Dynamic Environments.',
+        venue: 'Under Review',
+        gif: ''
+      },
+      {
+        authors: '<b>Xiao Hu</b>.',
+        title: 'Autonomous Positioning and Walking Trajectory Planning Method for Construction Robots.',
+        venue: '2021',
+        gif: ''
+      },
+      {
+        authors: '<b>Xiao Hu</b>, et al.',
+        title: 'Seeing Points Doing it: Pixel-point State for Real-World RL.',
+        venue: 'Submitted RSS 2026',
+        gif: './images/rss26.gif'
+      },
+      {
+        authors: '<b>Xiao Hu</b>, et al.',
+        title: 'UniPrototype: Human-Robot Skill Learning with Uniform Prototypes.',
+        venue: 'Submitted IROS 2026',
+        gif: ''
+      },
+      {
+        authors: 'X. Xiao, <b>Xiao Hu</b>, et al.',
+        title: 'CausalGDP: Causality-Guided Diffusion Policies for Reinforcement Learning.',
+        venue: 'Submitted IROS 2026',
+        gif: ''
+      },
+      {
+        authors: 'X. Li, Y. Wang, <b>Xiao Hu</b>, et al.',
+        title: 'When to Personalize Household Object Search: A Rigidity-Gated Hybrid Policy.',
+        venue: 'Submitted IROS 2026',
+        gif: ''
+      },
+      {
+        authors: 'T. Zhou, F. Xu, J. Wu, <b>Xiao Hu</b>, et al.',
+        title: 'Non-Local Inference for Occluded DLO Manipulation via Tactile-Conditioned Diffusion Policies.',
+        venue: 'Submitted IROS 2026',
+        gif: ''
+      },
+      {
+        authors: 'Y. Wang, C. Wang, Z. Teng, <b>Xiao Hu</b>, et al.',
+        title: 'Thinking on Its Feet: Terrain-Aware Hierarchical Control with Proprioceptive Feedback for Humanoid Navigation.',
+        venue: 'Submitted IROS 2026',
+        gif: ''
+      }
+    ];
+
+    function renderPublications() {
+      const withGif = publications.filter(p => p.gif);
+      const withoutGif = publications.filter(p => !p.gif);
+      const sorted = [...withGif, ...withoutGif];
+
+      const container = document.getElementById('pub-list');
+      let html = '';
+      let idx = 1;
+      const needDivider = withGif.length > 0 && withoutGif.length > 0;
+
+      sorted.forEach((pub, i) => {
+        const hasGif = !!pub.gif;
+        const gifBadge = hasGif ? '<span class="pub-gif-badge">&#9654; Demo</span>' : '';
+        const gifRow = hasGif
+          ? '<div class="pub-gif-wrap"><img src="' + pub.gif + '" alt="Demo" loading="lazy"></div>'
+          : '';
+
+        if (needDivider && i === withGif.length) {
+          html += '<hr class="pub-divider">';
+        }
+
+        html += '<div class="pub-entry' + (hasGif ? ' has-gif' : '') + '">'
+          + '<span class="pub-num">' + idx + '</span>'
+          + '<div>' + pub.authors + ' ' + pub.title
+          + ' <span class="pub-venue">' + pub.venue + '</span>'
+          + gifBadge + '</div>'
+          + gifRow
+          + '</div>';
+        idx++;
+      });
+
+      container.innerHTML = html;
+    }
+
+    renderPublications();
+  </script>
+
 </body>
 
 </html>
