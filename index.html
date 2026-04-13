@@ -711,7 +711,8 @@
         authors: '<b>Xiao Hu</b>, et al.',
         title: 'Teleoperation of Semi-humanoid with Dexterous Hand.',
         venue: 'i3CE 2025',
-        gif: ''
+        gif: './images/telehumanoid.gif',
+        gifHeight: 180
       },
       {
         authors: '<b>Xiao Hu</b>, et al.',
@@ -776,8 +777,13 @@
       sorted.forEach((pub, i) => {
         const hasGif = !!pub.gif;
         const gifBadge = hasGif ? '<span class="pub-gif-badge">&#9654; Demo</span>' : '';
+        const gifStyleParts = [];
+        if (pub.gifWidth) gifStyleParts.push('width:' + pub.gifWidth + 'px');
+        if (pub.gifHeight) gifStyleParts.push('height:' + pub.gifHeight + 'px');
+        if (pub.gifHeight && !pub.gifWidth) gifStyleParts.push('width:auto');
+        const gifSizeStyle = gifStyleParts.length ? ' style="' + gifStyleParts.join(';') + ';"' : '';
         const gifRow = hasGif
-          ? '<div class="pub-gif-wrap"><img src="' + pub.gif + '" alt="Demo" loading="lazy"></div>'
+          ? '<div class="pub-gif-wrap"><img src="' + pub.gif + '" alt="Demo" loading="lazy"' + gifSizeStyle + '></div>'
           : '';
 
         if (needDivider && i === withGif.length) {
