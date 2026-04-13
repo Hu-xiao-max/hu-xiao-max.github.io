@@ -6,18 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Xiao Hu — Robotics Researcher</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #0f172a;
-      --accent: #3b82f6;
+      --accent: #2563eb;
       --accent-light: #60a5fa;
       --text: #1e293b;
       --text-secondary: #64748b;
       --bg: #ffffff;
-      --bg-alt: #f8fafc;
-      --border: #e2e8f0;
-      --radius: 16px;
+      --bg-soft: #f8fafc;
+      --border: #dbe3f0;
+      --shadow: 0 22px 60px rgba(15, 23, 42, 0.08);
+      --radius: 24px;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,142 +28,201 @@
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       color: var(--text);
-      background: var(--bg);
+      background:
+        radial-gradient(circle at top left, rgba(96,165,250,0.22), transparent 32%),
+        linear-gradient(180deg, #e0f2fe 0%, #f8fafc 28%, #f8fafc 100%);
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
     }
 
-    /* ── Nav ── */
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 100;
-      background: rgba(255,255,255,0.82);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      transition: box-shadow 0.3s;
-    }
-
-    nav.scrolled { box-shadow: 0 1px 12px rgba(0,0,0,0.06); }
-
-    nav .nav-inner {
-      max-width: 1100px;
+    .page-shell {
+      max-width: 1380px;
       margin: 0 auto;
-      padding: 0 32px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      padding: 28px;
+      display: grid;
+      grid-template-columns: minmax(290px, 360px) minmax(0, 1fr);
+      gap: 28px;
+      align-items: start;
     }
 
-    nav .brand {
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--primary);
-      text-decoration: none;
+    .sidebar {
+      position: sticky;
+      top: 24px;
     }
 
-    nav .nav-links { display: flex; gap: 28px; }
-
-    nav .nav-links a {
-      font-size: 0.88rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-      text-decoration: none;
-      transition: color 0.2s;
-      letter-spacing: 0.3px;
-    }
-
-    nav .nav-links a:hover { color: var(--accent); }
-
-    /* ── Hero ── */
-    .hero {
-      padding: 160px 32px 100px;
-      text-align: center;
-      background: linear-gradient(165deg, #0f172a 0%, #1e3a5f 50%, #2563eb 100%);
-      color: #fff;
+    .sidebar-panel {
       position: relative;
       overflow: hidden;
+      padding: 30px;
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at top right, rgba(96,165,250,0.35), transparent 34%),
+        linear-gradient(155deg, #0f172a 0%, #163b6d 56%, #2563eb 100%);
+      color: #fff;
+      box-shadow: 0 30px 80px rgba(15, 23, 42, 0.2);
+      border: 1px solid rgba(255,255,255,0.14);
     }
 
-    .hero::before {
+    .sidebar-panel::before {
       content: '';
       position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at 30% 70%, rgba(59,130,246,0.15) 0%, transparent 50%),
-                  radial-gradient(circle at 70% 30%, rgba(96,165,250,0.1) 0%, transparent 50%);
+      inset: auto auto -90px -90px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.07);
       pointer-events: none;
     }
 
-    .hero-content { position: relative; z-index: 1; }
-
-    .hero .avatar {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      border: 4px solid rgba(255,255,255,0.25);
-      object-fit: cover;
-      margin-bottom: 28px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    }
-
-    .hero h1 {
-      font-size: 2.8rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      margin-bottom: 12px;
-    }
-
-    .hero .tagline {
-      font-size: 1.15rem;
-      font-weight: 400;
-      opacity: 0.85;
-      max-width: 600px;
-      margin: 0 auto 32px;
-    }
-
-    .hero .contact-row {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    .hero .contact-row a,
-    .hero .contact-row span {
-      font-size: 0.9rem;
-      color: rgba(255,255,255,0.8);
-      text-decoration: none;
+    .brand {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      transition: color 0.2s;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.86);
+      text-decoration: none;
+      margin-bottom: 28px;
     }
 
-    .hero .contact-row a:hover { color: #fff; }
+    .brand::before {
+      content: '';
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #93c5fd;
+      box-shadow: 0 0 0 6px rgba(147,197,253,0.18);
+    }
 
-    /* ── Sections ── */
+    .profile-card {
+      position: relative;
+      z-index: 1;
+    }
+
+    .avatar {
+      width: 136px;
+      height: 136px;
+      border-radius: 28px;
+      object-fit: cover;
+      border: 3px solid rgba(255,255,255,0.2);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.22);
+      margin-bottom: 22px;
+    }
+
+    .profile-kicker {
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.66);
+      margin-bottom: 10px;
+    }
+
+    .sidebar h1 {
+      font-size: 2.35rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.06;
+      margin-bottom: 14px;
+    }
+
+    .tagline {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.84);
+      max-width: 28ch;
+    }
+
+    .contact-list {
+      margin-top: 28px;
+      display: grid;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-list a,
+    .contact-list span {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.88);
+      font-size: 0.9rem;
+      text-decoration: none;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: transform 0.2s, background 0.2s, border-color 0.2s;
+    }
+
+    .contact-list a:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.24);
+    }
+
+    .side-nav {
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.14);
+      display: grid;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .side-nav a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 13px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.82);
+      text-decoration: none;
+      font-size: 0.92rem;
+      transition: transform 0.2s, background 0.2s, border-color 0.2s;
+    }
+
+    .side-nav a:hover {
+      transform: translateX(4px);
+      background: rgba(255,255,255,0.11);
+      border-color: rgba(255,255,255,0.24);
+    }
+
+    .side-nav strong {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .content {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
     .section {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 80px 32px;
-    }
-
-    .section-alt { background: var(--bg-alt); }
-
-    .section-alt .section {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 80px 32px;
+      scroll-margin-top: 24px;
+      padding: 34px 36px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(255,255,255,0.68);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
     .section-title {
-      font-size: 1.6rem;
+      font-size: 1.55rem;
       font-weight: 700;
       color: var(--primary);
       margin-bottom: 8px;
@@ -171,11 +231,14 @@
     .section-subtitle {
       font-size: 0.95rem;
       color: var(--text-secondary);
-      margin-bottom: 40px;
+      margin-bottom: 34px;
     }
 
-    /* ── Experience cards ── */
-    .exp-grid { display: flex; flex-direction: column; gap: 20px; }
+    .exp-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
 
     .exp-card {
       display: flex;
@@ -183,14 +246,15 @@
       gap: 20px;
       padding: 24px;
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: 20px;
       background: var(--bg);
-      transition: box-shadow 0.25s, transform 0.25s;
+      transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
     }
 
     .exp-card:hover {
       box-shadow: 0 8px 30px rgba(0,0,0,0.07);
       transform: translateY(-2px);
+      border-color: rgba(37,99,235,0.2);
     }
 
     .exp-card .logo-link { flex-shrink: 0; }
@@ -235,8 +299,13 @@
       margin-top: 4px;
     }
 
-    /* ── Education timeline ── */
-    .edu-timeline { display: flex; flex-direction: column; gap: 0; position: relative; padding-left: 28px; }
+    .edu-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      padding-left: 28px;
+    }
 
     .edu-timeline::before {
       content: '';
@@ -250,7 +319,7 @@
 
     .edu-item {
       position: relative;
-      padding: 12px 0 12px 0;
+      padding: 12px 0;
     }
 
     .edu-item::before {
@@ -266,8 +335,6 @@
       box-shadow: 0 0 0 2px var(--accent);
     }
 
-    .section-alt .edu-item::before { border-color: var(--bg-alt); }
-
     .edu-item .edu-school {
       font-weight: 600;
       font-size: 1rem;
@@ -279,8 +346,11 @@
       color: var(--text-secondary);
     }
 
-    /* ── Publication list ── */
-    .pub-list { display: flex; flex-direction: column; gap: 0; }
+    .pub-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
 
     .pub-entry {
       padding: 16px 0;
@@ -301,15 +371,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--bg-alt);
+      background: var(--bg-soft);
       border-radius: 8px;
       font-size: 0.75rem;
       font-weight: 600;
       color: var(--accent);
       margin-top: 2px;
     }
-
-    .section-alt .pub-num { background: var(--bg); }
 
     .pub-entry b { color: var(--text); }
 
@@ -368,17 +436,16 @@
       margin: 20px 0 12px;
     }
 
-    /* ── Awards & Service ── */
     .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 40px;
+      gap: 24px;
     }
 
     .list-card {
       padding: 28px;
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: 20px;
       background: var(--bg);
     }
 
@@ -410,205 +477,216 @@
       border-radius: 50%;
     }
 
-    /* ── Footer ── */
-    footer {
+    .site-footer {
       text-align: center;
-      padding: 40px 32px;
-      border-top: 1px solid var(--border);
+      padding: 18px 12px 6px;
       font-size: 0.85rem;
       color: var(--text-secondary);
     }
 
-    footer a {
+    .site-footer a {
       color: var(--accent);
       text-decoration: none;
     }
 
-    footer a:hover { text-decoration: underline; }
+    .site-footer a:hover { text-decoration: underline; }
 
-    /* ── Responsive ── */
-    @media (max-width: 768px) {
-      .hero { padding: 140px 24px 72px; }
-      .hero h1 { font-size: 2rem; }
-      .hero .tagline { font-size: 1rem; }
-      .section, .section-alt .section { padding: 56px 20px; }
-      .two-col { grid-template-columns: 1fr; gap: 20px; }
-      .exp-card { flex-direction: column; align-items: center; text-align: center; }
-      nav .nav-links { gap: 16px; }
-      nav .nav-links a { font-size: 0.8rem; }
-      .hero .contact-row { flex-direction: column; gap: 10px; }
+    @media (max-width: 1040px) {
+      .page-shell {
+        grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+        padding: 24px;
+      }
+
+      .section { padding: 30px; }
     }
 
-    @media (max-width: 480px) {
-      nav .nav-links { gap: 10px; }
-      .hero h1 { font-size: 1.6rem; }
-      .hero .avatar { width: 110px; height: 110px; }
+    @media (max-width: 860px) {
+      .page-shell {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .sidebar-panel {
+        padding: 26px 24px;
+        border-radius: 24px;
+      }
+
+      .tagline {
+        max-width: none;
+      }
+
+      .side-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-shell {
+        padding: 16px;
+      }
+
+      .sidebar h1 { font-size: 2rem; }
+      .avatar { width: 112px; height: 112px; border-radius: 22px; }
+      .section { padding: 24px 20px; border-radius: 20px; }
+      .two-col { grid-template-columns: 1fr; gap: 20px; }
+      .exp-card { flex-direction: column; }
+      .exp-card .exp-date { white-space: normal; }
+      .pub-entry { flex-direction: column; gap: 10px; }
+      .pub-gif-wrap { padding-left: 0; }
+      .side-nav { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 
-<body>
-
-  <!-- Navigation -->
-  <nav id="navbar">
-    <div class="nav-inner">
-      <a class="brand" href="#">Xiao Hu</a>
-      <div class="nav-links">
-        <a href="#experience">Experience</a>
-        <a href="#education">Education</a>
-        <a href="#publications">Publications</a>
-        <a href="#more">Awards</a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Hero -->
-  <section class="hero" id="hero">
-    <div class="hero-content">
-      <img class="avatar" src="./images/hx.png" alt="Xiao Hu">
-      <h1>Xiao Hu</h1>
-      <p class="tagline">Robotics Researcher — PhD at Northeastern University<br>Reinforcement Learning · Manipulation · Human-Robot Interaction</p>
-      <div class="contact-row">
-        <a href="mailto:xiao.h1@northeastern.edu">&#9993; xiao.h1@northeastern.edu</a>
-        <span>&#9742; +1 857-788-6299</span>
-        <a href="https://hu-xiao-max.github.io/video.xiaohu/" target="_blank" rel="noopener">&#9654; Project Videos</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Experience -->
-  <div class="section-alt">
-    <div class="section" id="experience">
-      <h2 class="section-title">Experience</h2>
-      <p class="section-subtitle">Industry research & engineering roles in robotics</p>
-      <div class="exp-grid">
-
-        <div class="exp-card">
-          <a class="logo-link" href="https://www.pudurobotics.com/en/products?tab=xlab" target="_blank" rel="noopener">
-            <img class="company-logo" src="./images/pudu.svg" alt="Pudu Robotics">
-          </a>
-          <div class="exp-info">
-            <div class="exp-role">Robotics Algorithm Engineer</div>
-            <div class="exp-company">Pudu Robotics — X Lab</div>
-            <div class="exp-meta">Robotics algorithm R&D</div>
-          </div>
-          <div class="exp-date">2024 – 2025</div>
+<body id="top">
+  <div class="page-shell">
+    <aside class="sidebar">
+      <div class="sidebar-panel">
+        <a class="brand" href="#top">Xiao Hu</a>
+        <div class="profile-card">
+          <img class="avatar" src="./images/hx.png" alt="Xiao Hu">
+          <p class="profile-kicker">Robotics Researcher</p>
+          <h1>Xiao Hu</h1>
+          <p class="tagline">PhD at Northeastern University<br>Reinforcement Learning · Manipulation · Human-Robot Interaction</p>
         </div>
-
-        <div class="exp-card">
-          <a class="logo-link" href="https://roboticsx.tencent.com/#/" target="_blank" rel="noopener">
-            <img class="company-logo" src="./images/tencent.svg" alt="Tencent">
-          </a>
-          <div class="exp-info">
-            <div class="exp-role">Assistant Researcher</div>
-            <div class="exp-company">Tencent — Robotics X</div>
-            <div class="exp-meta">Research on robotic manipulation and learning</div>
-          </div>
-          <div class="exp-date">2023 – 2024</div>
+        <div class="contact-list">
+          <a href="mailto:xiao.jeremy.h1@gmail.com">&#9993; xiao.jeremy.h1@gmail.com</a>
+          <span>&#9742; +1 857-788-6299</span>
+          <a href="https://github.com/Hu-xiao-max" target="_blank" rel="noopener">&#128187; GitHub</a>
+          <a href="https://hu-xiao-max.github.io/video.xiaohu/" target="_blank" rel="noopener">&#9654; Project Videos</a>
         </div>
+        <nav class="side-nav" aria-label="Section navigation">
+          <a href="#experience"><span>Experience</span><strong>01</strong></a>
+          <a href="#education"><span>Education</span><strong>02</strong></a>
+          <a href="#publications"><span>Publications</span><strong>03</strong></a>
+          <a href="#more"><span>Awards &amp; Service</span><strong>04</strong></a>
+        </nav>
+      </div>
+    </aside>
 
-        <div class="exp-card">
-          <a class="logo-link" href="https://www.xpeng.com/" target="_blank" rel="noopener">
-            <img class="company-logo" src="./images/xpeng.svg" alt="XPeng">
-          </a>
-          <div class="exp-info">
-            <div class="exp-role">Robotic Arm Algorithm R&D Engineer</div>
-            <div class="exp-company">Xpeng Robotics (Intern)</div>
-            <div class="exp-meta">Mentor: Dr. Chen Xiangyu</div>
+    <main class="content">
+      <section class="section" id="experience">
+        <h2 class="section-title">Experience</h2>
+        <p class="section-subtitle">Industry research &amp; engineering roles in robotics</p>
+        <div class="exp-grid">
+          <div class="exp-card">
+            <a class="logo-link" href="https://www.pudurobotics.com/en/products?tab=xlab" target="_blank" rel="noopener">
+              <img class="company-logo" src="./images/pudu.svg" alt="Pudu Robotics">
+            </a>
+            <div class="exp-info">
+              <div class="exp-role">Robotics Algorithm Engineer</div>
+              <div class="exp-company">Pudu Robotics — X Lab</div>
+              <div class="exp-meta">Robotics algorithm R&amp;D</div>
+            </div>
+            <div class="exp-date">2024 – 2025</div>
           </div>
-          <div class="exp-date">2022 – 2023</div>
-        </div>
 
-        <div class="exp-card">
-          <a class="logo-link" href="https://github.com/idea-research" target="_blank" rel="noopener">
-            <img class="company-logo" src="./images/idea.svg" alt="IDEA">
-          </a>
-          <div class="exp-info">
-            <div class="exp-role">Robotics Researcher</div>
-            <div class="exp-company">IDEA — Greater Bay Area Digital Economy Research Institute (Intern)</div>
-            <div class="exp-meta">Mentor: Dr. Zhang Lei (IEEE Fellow)</div>
+          <div class="exp-card">
+            <a class="logo-link" href="https://roboticsx.tencent.com/#/" target="_blank" rel="noopener">
+              <img class="company-logo" src="./images/tencent.svg" alt="Tencent">
+            </a>
+            <div class="exp-info">
+              <div class="exp-role">Assistant Researcher</div>
+              <div class="exp-company">Tencent — Robotics X</div>
+              <div class="exp-meta">Research on robotic manipulation and learning</div>
+            </div>
+            <div class="exp-date">2023 – 2024</div>
           </div>
-          <div class="exp-date">2021 – 2022</div>
+
+          <div class="exp-card">
+            <a class="logo-link" href="https://www.xpeng.com/" target="_blank" rel="noopener">
+              <img class="company-logo" src="./images/xpeng.svg" alt="XPeng">
+            </a>
+            <div class="exp-info">
+              <div class="exp-role">Robotic Arm Algorithm R&amp;D Engineer</div>
+              <div class="exp-company">Xpeng Robotics (Intern)</div>
+              <div class="exp-meta">Mentor: Dr. Chen Xiangyu</div>
+            </div>
+            <div class="exp-date">2022 – 2023</div>
+          </div>
+
+          <div class="exp-card">
+            <a class="logo-link" href="https://github.com/idea-research" target="_blank" rel="noopener">
+              <img class="company-logo" src="./images/idea.svg" alt="IDEA">
+            </a>
+            <div class="exp-info">
+              <div class="exp-role">Robotics Researcher</div>
+              <div class="exp-company">IDEA — Greater Bay Area Digital Economy Research Institute (Intern)</div>
+              <div class="exp-meta">Mentor: Dr. Zhang Lei (IEEE Fellow)</div>
+            </div>
+            <div class="exp-date">2021 – 2022</div>
+          </div>
         </div>
+      </section>
 
-      </div>
-    </div>
+      <section class="section" id="education">
+        <h2 class="section-title">Education</h2>
+        <p class="section-subtitle">Academic background</p>
+        <div class="edu-timeline">
+          <div class="edu-item">
+            <div class="edu-school">Harvard University</div>
+            <div class="edu-degree">Summer School</div>
+          </div>
+          <div class="edu-item">
+            <div class="edu-school">Northeastern University</div>
+            <div class="edu-degree">Data &amp; System (PhD Fellowship)</div>
+          </div>
+          <div class="edu-item">
+            <div class="edu-school">South China University of Technology</div>
+            <div class="edu-degree">Control Science and Engineering</div>
+          </div>
+          <div class="edu-item">
+            <div class="edu-school">Shenzhen University</div>
+            <div class="edu-degree">Intelligent System</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="publications">
+        <h2 class="section-title">Publications</h2>
+        <div class="pub-list" id="pub-list"></div>
+      </section>
+
+      <section class="section" id="more">
+        <h2 class="section-title">Awards &amp; Service</h2>
+        <p class="section-subtitle">Recognition and academic contributions</p>
+        <div class="two-col">
+          <div class="list-card">
+            <h3>Awards</h3>
+            <ul>
+              <li>2018 China Robot Competition — Dance Group First Prize</li>
+              <li>2018 National College Student Mathematical Modeling — Provincial First Prize</li>
+              <li>2019 National College Student Electronic Design — Provincial First Prize</li>
+              <li>2017 China Engineering Robot Competition — Narrow Foot Race Second Prize</li>
+              <li>Shenzhen University Graduate First-class Scholarship</li>
+            </ul>
+          </div>
+          <div class="list-card">
+            <h3>Academic Service</h3>
+            <ul>
+              <li>Vice Chair of 2026 IEEE Summit</li>
+              <li>Reviewer: ICRA, IROS</li>
+              <li>Reviewer: IEEE Trans. on Human-Machine Systems</li>
+              <li>Reviewer: ACM Intl. Conf. on Human-Robot Interaction</li>
+              <li>Reviewer: IEEE MIT Undergrad Research Technology Conf.</li>
+              <li>Reviewer: IEEE Intl. Conf. on Intelligent Reality</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        &copy; 2026 Xiao Hu &middot; Built with care &middot;
+        <a href="mailto:xiao.jeremy.h1@gmail.com">Contact</a>
+      </footer>
+    </main>
   </div>
-
-  <!-- Education -->
-  <div class="section" id="education">
-    <h2 class="section-title">Education</h2>
-    <p class="section-subtitle">Academic background</p>
-    <div class="edu-timeline">
-      <div class="edu-item">
-        <div class="edu-school">Harvard University</div>
-        <div class="edu-degree">Summer School</div>
-      </div>
-      <div class="edu-item">
-        <div class="edu-school">Northeastern University</div>
-        <div class="edu-degree">Data & System (PhD Fellowship)</div>
-      </div>
-      <div class="edu-item">
-        <div class="edu-school">South China University of Technology</div>
-        <div class="edu-degree">Control Science and Engineering</div>
-      </div>
-      <div class="edu-item">
-        <div class="edu-school">Shenzhen University</div>
-        <div class="edu-degree">Intelligent System</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Publications -->
-  <div class="section-alt">
-    <div class="section" id="publications">
-      <h2 class="section-title">Publications</h2>
-      <p class="section-subtitle">Selected papers in robotics and reinforcement learning</p>
-      <div class="pub-list" id="pub-list"></div>
-    </div>
-  </div>
-
-  <!-- Awards & Service -->
-  <div class="section" id="more">
-    <h2 class="section-title">Awards &amp; Service</h2>
-    <p class="section-subtitle">Recognition and academic contributions</p>
-    <div class="two-col">
-      <div class="list-card">
-        <h3>Awards</h3>
-        <ul>
-          <li>2018 China Robot Competition — Dance Group First Prize</li>
-          <li>2018 National College Student Mathematical Modeling — Provincial First Prize</li>
-          <li>2019 National College Student Electronic Design — Provincial First Prize</li>
-          <li>2017 China Engineering Robot Competition — Narrow Foot Race Second Prize</li>
-          <li>Shenzhen University Graduate First-class Scholarship</li>
-        </ul>
-      </div>
-      <div class="list-card">
-        <h3>Academic Service</h3>
-        <ul>
-          <li>Vice Chair of 2026 IEEE Summit</li>
-          <li>Reviewer: ICRA, IROS</li>
-          <li>Reviewer: IEEE Trans. on Human-Machine Systems</li>
-          <li>Reviewer: ACM Intl. Conf. on Human-Robot Interaction</li>
-          <li>Reviewer: IEEE MIT Undergrad Research Technology Conf.</li>
-          <li>Reviewer: IEEE Intl. Conf. on Intelligent Reality</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer>
-    &copy; 2026 Xiao Hu &middot; Built with care &middot;
-    <a href="mailto:xiao.h1@northeastern.edu">Contact</a>
-  </footer>
 
   <script>
-    const nav = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 20);
-    });
-
     /**
      * ── Publication data ──
      * gif: 填写 gif 文件路径即可，有 gif 的自动排到前面并显示预览。
@@ -721,7 +799,6 @@
 
     renderPublications();
   </script>
-
 </body>
 
 </html>
