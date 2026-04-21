@@ -393,7 +393,7 @@
       vertical-align: middle;
     }
 
-    .pub-entry.has-gif {
+    .pub-entry.has-media {
       flex-wrap: wrap;
     }
 
@@ -691,19 +691,23 @@
   <script>
     /**
      * ── Publication data ──
-     * gif/mp4: 填写 gif 或 mp4 文件路径即可，有预览媒体的会自动排到前面并显示 Demo。
+     * gif/webm/mp4: 填写媒体文件路径即可，有预览媒体的会自动排到前面并显示 Demo。
      *          留空或不写则排到后面。
      *
      * 示例:
      * gif: './images/pub_teleoperation.gif'
+     * webm: './images/pub_teleoperation.webm'
      * mp4: './images/pub_teleoperation.mp4'
+     * poster: './images/pub_teleoperation-poster.jpg'
      */
     const publications = [
       {
         authors: '<b>Xiao Hu</b>, et al.',
         title: 'Seeing Points Doing it: Pixel-point State for Real-World RL.',
         venue: 'Submitted RSS 2026',
+        webm: './images/rss26.webm',
         mp4: './images/rss26.mp4',
+        poster: './images/rss26-poster.jpg',
         mp4Height: 180
       },
       {
@@ -729,7 +733,9 @@
         authors: '<b>Xiao Hu</b>, et al.',
         title: 'Physics-Grounded Rapid Grasp Pose Synthesis for Novel Objects',
         venue: 'Advanced Robotics Research (under review)',
+        webm: './images/grasp.webm',
         mp4: './images/grasp.mp4',
+        poster: './images/grasp-poster.jpg',
         mp4Height: 180
       },
       {
@@ -777,8 +783,8 @@
     ];
 
     function renderPublications() {
-      const withMedia = publications.filter(p => p.gif || p.mp4);
-      const withoutMedia = publications.filter(p => !p.gif && !p.mp4);
+      const withMedia = publications.filter(p => p.gif || p.webm || p.mp4);
+      const withoutMedia = publications.filter(p => !p.gif && !p.webm && !p.mp4);
       const sorted = [...withMedia, ...withoutMedia];
 
       const container = document.getElementById('pub-list');
@@ -788,18 +794,21 @@
 
       sorted.forEach((pub, i) => {
         const hasGif = !!pub.gif;
-        const hasMp4 = !!pub.mp4;
-        const hasMedia = hasGif || hasMp4;
+        const hasVideo = !!(pub.webm || pub.mp4);
+        const hasMedia = hasGif || hasVideo;
         const gifBadge = hasMedia ? '<span class="pub-gif-badge">&#9654; Demo</span>' : '';
         const mediaStyleParts = [];
-        const mediaWidth = hasMp4 ? (pub.mp4Width || pub.gifWidth) : pub.gifWidth;
-        const mediaHeight = hasMp4 ? (pub.mp4Height || pub.gifHeight) : pub.gifHeight;
+        const mediaWidth = hasVideo ? (pub.webmWidth || pub.mp4Width || pub.gifWidth) : pub.gifWidth;
+        const mediaHeight = hasVideo ? (pub.webmHeight || pub.mp4Height || pub.gifHeight) : pub.gifHeight;
         if (mediaWidth) mediaStyleParts.push('width:' + mediaWidth + 'px');
         if (mediaHeight) mediaStyleParts.push('height:' + mediaHeight + 'px');
         if (mediaHeight && !mediaWidth) mediaStyleParts.push('width:auto');
         const mediaSizeStyle = mediaStyleParts.length ? ' style="' + mediaStyleParts.join(';') + ';"' : '';
-        const gifRow = hasMp4
-          ? '<div class="pub-gif-wrap"><video autoplay muted loop playsinline preload="metadata"' + mediaSizeStyle + '><source src="' + pub.mp4 + '" type="video/mp4"></video></div>'
+        const posterAttr = pub.poster ? ' poster="' + pub.poster + '"' : '';
+        const videoSources = (pub.webm ? '<source src="' + pub.webm + '" type="video/webm">' : '')
+          + (pub.mp4 ? '<source src="' + pub.mp4 + '" type="video/mp4">' : '');
+        const gifRow = hasVideo
+          ? '<div class="pub-gif-wrap"><video autoplay muted loop playsinline preload="metadata"' + posterAttr + mediaSizeStyle + '>' + videoSources + '</video></div>'
           : (hasGif
             ? '<div class="pub-gif-wrap"><img src="' + pub.gif + '" alt="Demo" loading="lazy"' + mediaSizeStyle + '></div>'
             : '');
@@ -808,7 +817,7 @@
           html += '<hr class="pub-divider">';
         }
 
-        html += '<div class="pub-entry' + (hasMedia ? ' has-gif' : '') + '">'
+        html += '<div class="pub-entry' + (hasMedia ? ' has-media' : '') + '">'
           + '<span class="pub-num">' + idx + '</span>'
           + '<div>' + pub.authors + ' ' + pub.title
           + ' <span class="pub-venue">' + pub.venue + '</span>'
