@@ -438,6 +438,71 @@
       margin: 20px 0 12px;
     }
 
+    .robot-showcase {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(280px, 1.1fr);
+      gap: 26px;
+      align-items: center;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at top left, rgba(96,165,250,0.14), transparent 36%),
+        var(--bg);
+    }
+
+    .robot-label {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 14px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: var(--accent);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .robot-title {
+      font-size: 1.35rem;
+      line-height: 1.25;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .robot-copy {
+      color: var(--text-secondary);
+      font-size: 0.94rem;
+      margin-bottom: 18px;
+    }
+
+    .robot-highlights {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .robot-highlights span {
+      padding: 7px 10px;
+      border-radius: 10px;
+      background: var(--bg-soft);
+      color: var(--text);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+    }
+
+    .robot-video {
+      width: 100%;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      box-shadow: 0 14px 36px rgba(15, 23, 42, 0.12);
+      background: #0f172a;
+      display: block;
+    }
+
     .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -534,6 +599,7 @@
       .sidebar h1 { font-size: 2rem; }
       .avatar { width: 112px; height: 112px; border-radius: 22px; }
       .section { padding: 24px 20px; border-radius: 20px; }
+      .robot-showcase { grid-template-columns: 1fr; padding: 20px; }
       .two-col { grid-template-columns: 1fr; gap: 20px; }
       .exp-card { flex-direction: column; }
       .exp-card .exp-date { white-space: normal; }
@@ -565,7 +631,8 @@
           <a href="#experience"><span>Experience</span><strong>01</strong></a>
           <a href="#education"><span>Education</span><strong>02</strong></a>
           <a href="#publications"><span>Publications</span><strong>03</strong></a>
-          <a href="#more"><span>Awards &amp; Service</span><strong>04</strong></a>
+          <a href="#robot"><span>Robot Build</span><strong>04</strong></a>
+          <a href="#more"><span>Awards &amp; Service</span><strong>05</strong></a>
         </nav>
       </div>
     </aside>
@@ -651,6 +718,33 @@
       <section class="section" id="publications">
         <h2 class="section-title">Publications</h2>
         <div class="pub-list" id="pub-list"></div>
+      </section>
+
+      <section class="section" id="robot">
+        <h2 class="section-title">Self-Designed Competition Robot</h2>
+        <p class="section-subtitle">From design and fabrication to award-winning performance</p>
+        <div class="robot-showcase">
+          <div>
+            <span class="robot-label">Top 1% · First Prize</span>
+            <h3 class="robot-title">Built a complete robot from concept to competition</h3>
+            <p class="robot-copy">
+              I independently completed the full robot development process, including mechanical design,
+              manufacturing, system integration, and competition deployment. The robot ultimately won
+              First Prize, placing in the top 1% of the competition.
+            </p>
+            <div class="robot-highlights" aria-label="Robot project highlights">
+              <span>Mechanical Design</span>
+              <span>Fabrication</span>
+              <span>System Integration</span>
+              <span>Competition Champion</span>
+            </div>
+          </div>
+          <video class="robot-video" autoplay muted loop playsinline preload="metadata">
+            <source src="./images/selfdesignrobot.webm" type="video/webm">
+            <source src="./images/selfdesignrobot.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
       </section>
 
       <section class="section" id="more">
