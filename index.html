@@ -482,6 +482,39 @@
       border: 1px solid var(--border);
     }
 
+    .skill-group-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin: 22px 0 12px;
+    }
+
+    .skill-group-label:first-child { margin-top: 0; }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .skill-tags span {
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--bg-soft);
+      color: var(--text);
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+    }
+
+    .skill-tags.skill-tags-robots span {
+      background: #eff6ff;
+      color: var(--accent);
+      border-color: rgba(37,99,235,0.2);
+    }
+
     .robot-video {
       width: 100%;
       border-radius: 18px;
@@ -612,6 +645,7 @@
       <a href="#publications"><strong>03</strong><span>Publications</span></a>
       <a href="#robot"><strong>04</strong><span>Robot Build</span></a>
       <a href="#more"><strong>05</strong><span>Awards &amp; Service</span></a>
+      <a href="#skills"><strong>06</strong><span>Skills</span></a>
     </nav>
 
     <main class="content">
@@ -748,6 +782,30 @@
               <li>Reviewer: IEEE Intl. Conf. on Intelligent Reality</li>
             </ul>
           </div>
+        </div>
+      </section>
+
+      <section class="section" id="skills">
+        <h2 class="section-title">Skills</h2>
+        <p class="section-subtitle">Tools, languages &amp; robot platforms</p>
+        <p class="skill-group-label">Tools &amp; Languages</p>
+        <div class="skill-tags">
+          <span>ROS1 &amp; ROS2</span>
+          <span>Python</span>
+          <span>C++</span>
+          <span>Git</span>
+          <span>Java</span>
+          <span>SolidWorks</span>
+          <span>3D Print</span>
+        </div>
+        <p class="skill-group-label">Robot Models</p>
+        <div class="skill-tags skill-tags-robots">
+          <span>Franka Research 3</span>
+          <span>ABB</span>
+          <span>Kinova</span>
+          <span>G1</span>
+          <span>Flexiv</span>
+          <span>Humanoid Robot</span>
         </div>
       </section>
 
