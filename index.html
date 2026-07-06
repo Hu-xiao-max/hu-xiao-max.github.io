@@ -1024,90 +1024,7 @@
       <button type="button" class="resume-btn resume-btn-primary" onclick="window.print()">&#128424; Print / Save PDF</button>
     </div>
 
-    <div class="resume-page">
-      <header class="resume-header">
-        <h1 class="resume-name">Xiao Hu</h1>
-        <p class="resume-headline">Robotics Researcher &middot; Reinforcement Learning &middot; Manipulation &middot; Human-Robot Interaction</p>
-        <div class="resume-contact">
-          <a href="mailto:xiao.jeremy.h1@gmail.com">xiao.jeremy.h1@gmail.com</a>
-          <span>+1 857-788-6299</span>
-          <a href="https://github.com/Hu-xiao-max" target="_blank" rel="noopener">github.com/Hu-xiao-max</a>
-          <a href="https://hu-xiao-max.github.io/video.xiaohu/" target="_blank" rel="noopener">Project Videos</a>
-        </div>
-      </header>
-
-      <section class="resume-section">
-        <h2 class="resume-section-title">Education</h2>
-        <div class="resume-item">
-          <div class="resume-item-main"><span class="resume-item-title">Northeastern University</span><span class="resume-item-sub">Data &amp; System (PhD Fellowship)</span></div>
-        </div>
-        <div class="resume-item">
-          <div class="resume-item-main"><span class="resume-item-title">Harvard University</span><span class="resume-item-sub">Summer School</span></div>
-        </div>
-        <div class="resume-item">
-          <div class="resume-item-main"><span class="resume-item-title">South China University of Technology</span><span class="resume-item-sub">Control Science and Engineering</span></div>
-        </div>
-        <div class="resume-item">
-          <div class="resume-item-main"><span class="resume-item-title">Shenzhen University</span><span class="resume-item-sub">Intelligent System</span></div>
-        </div>
-      </section>
-
-      <section class="resume-section">
-        <h2 class="resume-section-title">Experience</h2>
-        <div class="resume-item">
-          <div class="resume-item-main"><span class="resume-item-title">Robotics Algorithm Engineer</span><span class="resume-item-date">2024 &ndash; 2025</span></div>
-          <div class="resume-item-sub">Pudu Robotics &mdash; X Lab &middot; Robotics algorithm R&amp;D</div>
-        </div>
-        <div class="resume-item">
-          <div class="resume-item-main"><span class="resume-item-title">Research Engineer</span><span class="resume-item-date">2023 &ndash; 2024</span></div>
-          <div class="resume-item-sub">Tencent &mdash; Robotics X &middot; Research on robotic manipulation and learning</div>
-        </div>
-        <div class="resume-item">
-          <div class="resume-item-main"><span class="resume-item-title">Robotic Arm Algorithm R&amp;D Engineer</span><span class="resume-item-date">2022 &ndash; 2023</span></div>
-          <div class="resume-item-sub">Xpeng Robotics (Intern) &middot; Mentor: Dr. Chen Xiangyu</div>
-        </div>
-        <div class="resume-item">
-          <div class="resume-item-main"><span class="resume-item-title">Robotics Researcher</span><span class="resume-item-date">2021 &ndash; 2022</span></div>
-          <div class="resume-item-sub">IDEA &mdash; Greater Bay Area Digital Economy Research Institute (Intern) &middot; Mentor: Dr. Zhang Lei (IEEE Fellow)</div>
-        </div>
-      </section>
-
-      <section class="resume-section">
-        <h2 class="resume-section-title">Selected Publications</h2>
-        <ol class="resume-pub-list" id="resume-pub-list"></ol>
-      </section>
-
-      <section class="resume-section resume-two-col">
-        <div>
-          <h2 class="resume-section-title">Skills</h2>
-          <p class="resume-skill-label">Tools &amp; Languages</p>
-          <p class="resume-skill-line">ROS1 &amp; ROS2, Python, C++, Git, Java, SolidWorks, 3D Print</p>
-          <p class="resume-skill-label">Robot Models</p>
-          <p class="resume-skill-line">Franka Research 3, ABB, Kinova, G1, Flexiv, Humanoid Robot</p>
-        </div>
-        <div>
-          <h2 class="resume-section-title">Academic Service</h2>
-          <ul class="resume-bullet-list">
-            <li>Vice Chair of 2026 IEEE Summit</li>
-            <li>Reviewer: ICRA, CoRL, IROS</li>
-            <li>Reviewer: IEEE Trans. on Human-Machine Systems</li>
-            <li>Reviewer: ACM Intl. Conf. on Human-Robot Interaction</li>
-            <li>Reviewer: IEEE Intl. Conf. on Intelligent Reality</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="resume-section">
-        <h2 class="resume-section-title">Awards</h2>
-        <ul class="resume-bullet-list">
-          <li>2018 China Robot Competition &mdash; Dance Group First Prize</li>
-          <li>2018 National College Student Mathematical Modeling &mdash; Provincial First Prize</li>
-          <li>2019 National College Student Electronic Design &mdash; Provincial First Prize</li>
-          <li>2017 China Engineering Robot Competition &mdash; Narrow Foot Race Second Prize</li>
-          <li>Shenzhen University Graduate First-class Scholarship</li>
-        </ul>
-      </section>
-    </div>
+    <div class="resume-page" id="resume-page"></div>
   </div>
 
   <script>
@@ -1250,19 +1167,151 @@
 
     renderPublications();
 
-    function renderResumePublications() {
-      const container = document.getElementById('resume-pub-list');
-      if (!container) return;
-      const html = publications.map(function (pub) {
+    /**
+     * ── Resume 内容单一数据源 ──
+     * 简历所有条目均从主界面 DOM（及 publications 数组）实时读取生成，
+     * 因此只需维护主界面，简历会自动保持一致，无需重复修改。
+     */
+    function txt(el) {
+      return el ? el.textContent.replace(/\s+/g, ' ').trim() : '';
+    }
+
+    function cleanContact(el) {
+      // 去掉开头的图标符号/空白（如 "✉ email" → "email"，"☎ +1..." → "+1..."）
+      return txt(el).replace(/^[^\w+]+/, '').trim();
+    }
+
+    function buildResumeHeader() {
+      const name = txt(document.querySelector('.hero-body h1'));
+      const headline = txt(document.querySelector('.hero-body .tagline'));
+      const items = document.querySelectorAll('.contact-list > a, .contact-list > span');
+      let contactHtml = '';
+      items.forEach(function (el) {
+        if (el.classList.contains('resume-cta')) return;
+        const label = cleanContact(el);
+        if (!label) return;
+        if (el.tagName === 'A' && el.getAttribute('href')) {
+          const href = el.getAttribute('href');
+          const external = /^https?:/i.test(href);
+          contactHtml += '<a href="' + href + '"'
+            + (external ? ' target="_blank" rel="noopener"' : '') + '>' + label + '</a>';
+        } else {
+          contactHtml += '<span>' + label + '</span>';
+        }
+      });
+      return '<header class="resume-header">'
+        + '<h1 class="resume-name">' + name + '</h1>'
+        + (headline ? '<p class="resume-headline">' + headline + '</p>' : '')
+        + '<div class="resume-contact">' + contactHtml + '</div>'
+        + '</header>';
+    }
+
+    function buildResumeEducation() {
+      const items = document.querySelectorAll('#education .edu-item');
+      if (!items.length) return '';
+      let rows = '';
+      items.forEach(function (item) {
+        const school = txt(item.querySelector('.edu-school'));
+        const degree = txt(item.querySelector('.edu-degree'));
+        rows += '<div class="resume-item">'
+          + '<div class="resume-item-main">'
+          + '<span class="resume-item-title">' + school + '</span>'
+          + (degree ? '<span class="resume-item-sub">' + degree + '</span>' : '')
+          + '</div></div>';
+      });
+      return '<section class="resume-section"><h2 class="resume-section-title">Education</h2>' + rows + '</section>';
+    }
+
+    function buildResumeExperience() {
+      const cards = document.querySelectorAll('#experience .exp-card');
+      if (!cards.length) return '';
+      let rows = '';
+      cards.forEach(function (card) {
+        const role = txt(card.querySelector('.exp-role'));
+        const company = txt(card.querySelector('.exp-company'));
+        const meta = txt(card.querySelector('.exp-meta'));
+        const date = txt(card.querySelector('.exp-date'));
+        const subParts = [company, meta].filter(Boolean).join(' · ');
+        rows += '<div class="resume-item">'
+          + '<div class="resume-item-main">'
+          + '<span class="resume-item-title">' + role + '</span>'
+          + (date ? '<span class="resume-item-date">' + date + '</span>' : '')
+          + '</div>'
+          + (subParts ? '<div class="resume-item-sub">' + subParts + '</div>' : '')
+          + '</div>';
+      });
+      return '<section class="resume-section"><h2 class="resume-section-title">Experience</h2>' + rows + '</section>';
+    }
+
+    function buildResumePublications() {
+      if (!publications.length) return '';
+      const rows = publications.map(function (pub) {
         return '<li>' + pub.authors + ' ' + pub.title
           + ' <span class="resume-pub-venue">' + pub.venue + '</span></li>';
       }).join('');
-      container.innerHTML = html;
+      return '<section class="resume-section"><h2 class="resume-section-title">Selected Publications</h2>'
+        + '<ol class="resume-pub-list">' + rows + '</ol></section>';
     }
 
-    renderResumePublications();
+    function buildResumeSkills() {
+      const labels = document.querySelectorAll('#skills .skill-group-label');
+      if (!labels.length) return '';
+      let inner = '<h2 class="resume-section-title">Skills</h2>';
+      labels.forEach(function (label) {
+        const tagsWrap = label.nextElementSibling;
+        if (!tagsWrap || !tagsWrap.classList.contains('skill-tags')) return;
+        const tags = Array.prototype.map.call(tagsWrap.querySelectorAll('span'), txt).filter(Boolean);
+        inner += '<p class="resume-skill-label">' + txt(label) + '</p>'
+          + '<p class="resume-skill-line">' + tags.join(', ') + '</p>';
+      });
+      return inner;
+    }
+
+    function buildResumeServiceCards() {
+      // 复用主界面 #more 内的 list-card（如 Awards / Academic Service）
+      const cards = document.querySelectorAll('#more .list-card');
+      return Array.prototype.map.call(cards, function (card) {
+        const title = txt(card.querySelector('h3'));
+        const items = Array.prototype.map.call(card.querySelectorAll('li'), function (li) {
+          return '<li>' + txt(li) + '</li>';
+        }).join('');
+        return '<div><h2 class="resume-section-title">' + title + '</h2>'
+          + '<ul class="resume-bullet-list">' + items + '</ul></div>';
+      });
+    }
+
+    function buildResume() {
+      const page = document.getElementById('resume-page');
+      if (!page) return;
+
+      const skillsBlock = buildResumeSkills();
+      const serviceCards = buildResumeServiceCards();
+      // 第一张 service 卡片与 Skills 并排；其余 service 卡片各自单独成块
+      const firstService = serviceCards[0] || '';
+      const restServices = serviceCards.slice(1);
+
+      let html = buildResumeHeader()
+        + buildResumeEducation()
+        + buildResumeExperience()
+        + buildResumePublications();
+
+      if (skillsBlock || firstService) {
+        html += '<section class="resume-section resume-two-col">'
+          + '<div>' + skillsBlock + '</div>'
+          + (firstService || '<div></div>')
+          + '</section>';
+      }
+      restServices.forEach(function (cardHtml) {
+        html += '<section class="resume-section">' + cardHtml + '</section>';
+      });
+
+      page.innerHTML = html;
+    }
+
+    buildResume();
 
     function showResume() {
+      buildResume();
       document.body.classList.add('resume-open');
       document.getElementById('resume-view').hidden = false;
       window.scrollTo(0, 0);
