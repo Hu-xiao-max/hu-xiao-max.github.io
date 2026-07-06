@@ -147,6 +147,20 @@
       border-color: rgba(255,255,255,0.24);
     }
 
+    .contact-list a.resume-cta {
+      background: #fff;
+      color: var(--primary);
+      border-color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .contact-list a.resume-cta:hover {
+      background: #eff6ff;
+      color: var(--accent);
+      border-color: #eff6ff;
+    }
+
     .top-nav {
       position: sticky;
       top: 12px;
@@ -579,6 +593,191 @@
 
     .site-footer a:hover { text-decoration: underline; }
 
+    body.resume-open .page-shell { display: none; }
+
+    #resume-view {
+      background: #eef2f7;
+      min-height: 100vh;
+      padding: 24px 16px 60px;
+    }
+
+    .resume-toolbar {
+      max-width: 800px;
+      margin: 0 auto 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .resume-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: transform 0.2s, background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .resume-btn:hover { transform: translateY(-1px); }
+
+    .resume-btn-ghost {
+      background: #fff;
+      color: var(--text);
+    }
+
+    .resume-btn-ghost:hover {
+      background: #f1f5f9;
+      border-color: rgba(37,99,235,0.3);
+      color: var(--accent);
+    }
+
+    .resume-btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .resume-btn-primary:hover { background: #1d4ed8; }
+
+    .resume-page {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+      color: #1f2937;
+      padding: 48px 56px;
+      border-radius: 6px;
+      box-shadow: 0 18px 50px rgba(15, 23, 42, 0.14);
+      font-family: 'Georgia', 'Times New Roman', serif;
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .resume-header {
+      text-align: center;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #1f2937;
+      margin-bottom: 20px;
+    }
+
+    .resume-name {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #111827;
+    }
+
+    .resume-headline {
+      font-size: 0.92rem;
+      color: #4b5563;
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    .resume-contact {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px 18px;
+      font-size: 0.85rem;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    .resume-contact a { color: var(--accent); text-decoration: none; }
+    .resume-contact a:hover { text-decoration: underline; }
+    .resume-contact span { color: #4b5563; }
+
+    .resume-section { margin-bottom: 20px; }
+
+    .resume-section-title {
+      font-size: 1.02rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #111827;
+      border-bottom: 1px solid #d1d5db;
+      padding-bottom: 4px;
+      margin-bottom: 10px;
+    }
+
+    .resume-item { margin-bottom: 10px; }
+    .resume-item:last-child { margin-bottom: 0; }
+
+    .resume-item-main {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .resume-item-title { font-weight: 700; color: #111827; }
+
+    .resume-item-date {
+      font-size: 0.82rem;
+      color: #6b7280;
+      white-space: nowrap;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    .resume-item-sub { font-size: 0.9rem; color: #4b5563; }
+
+    .resume-pub-list {
+      margin: 0;
+      padding-left: 20px;
+      font-size: 0.9rem;
+    }
+
+    .resume-pub-list li { margin-bottom: 6px; color: #374151; }
+    .resume-pub-list li b { color: #111827; }
+
+    .resume-pub-venue {
+      font-style: italic;
+      color: #6b7280;
+    }
+
+    .resume-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .resume-skill-label {
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #374151;
+      margin-top: 8px;
+    }
+
+    .resume-skill-line { font-size: 0.9rem; color: #4b5563; }
+
+    .resume-bullet-list {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 0.9rem;
+    }
+
+    .resume-bullet-list li { margin-bottom: 4px; color: #374151; }
+
+    @media print {
+      body { background: #fff; }
+      .resume-toolbar { display: none !important; }
+      #resume-view { background: #fff; padding: 0; }
+      .resume-page {
+        max-width: none;
+        margin: 0;
+        box-shadow: none;
+        border-radius: 0;
+        padding: 0;
+        font-size: 11pt;
+      }
+      @page { margin: 14mm; }
+    }
+
     @media (max-width: 1040px) {
       .page-shell {
         padding: 24px;
@@ -616,6 +815,8 @@
       .pub-entry { flex-direction: column; gap: 10px; }
       .pub-gif-wrap { padding-left: 0; }
       .top-nav { justify-content: center; }
+      .resume-page { padding: 28px 22px; }
+      .resume-two-col { grid-template-columns: 1fr; gap: 16px; }
     }
   </style>
 </head>
@@ -635,6 +836,7 @@
           <span>&#9742; +1 857-788-6299</span>
           <a href="https://github.com/Hu-xiao-max" target="_blank" rel="noopener">&#128187; GitHub</a>
           <a href="https://hu-xiao-max.github.io/video.xiaohu/" target="_blank" rel="noopener">&#9654; Project Videos</a>
+          <a href="#" class="resume-cta" onclick="showResume(); return false;">&#128196; View Resume</a>
         </div>
       </div>
     </header>
@@ -713,7 +915,7 @@
           </div>
           <div class="edu-item">
             <div class="edu-school">Northeastern University</div>
-            <div class="edu-degree">Data &amp; System (PhD Fellowship)</div>
+            <div class="edu-degree">Robotics (PhD Fellowship)</div>
           </div>
           <div class="edu-item">
             <div class="edu-school">South China University of Technology</div>
@@ -814,6 +1016,98 @@
         <a href="mailto:xiao.jeremy.h1@gmail.com">Contact</a>
       </footer>
     </main>
+  </div>
+
+  <div id="resume-view" hidden>
+    <div class="resume-toolbar">
+      <button type="button" class="resume-btn resume-btn-ghost" onclick="hideResume()">&larr; Back</button>
+      <button type="button" class="resume-btn resume-btn-primary" onclick="window.print()">&#128424; Print / Save PDF</button>
+    </div>
+
+    <div class="resume-page">
+      <header class="resume-header">
+        <h1 class="resume-name">Xiao Hu</h1>
+        <p class="resume-headline">Robotics Researcher &middot; Reinforcement Learning &middot; Manipulation &middot; Human-Robot Interaction</p>
+        <div class="resume-contact">
+          <a href="mailto:xiao.jeremy.h1@gmail.com">xiao.jeremy.h1@gmail.com</a>
+          <span>+1 857-788-6299</span>
+          <a href="https://github.com/Hu-xiao-max" target="_blank" rel="noopener">github.com/Hu-xiao-max</a>
+          <a href="https://hu-xiao-max.github.io/video.xiaohu/" target="_blank" rel="noopener">Project Videos</a>
+        </div>
+      </header>
+
+      <section class="resume-section">
+        <h2 class="resume-section-title">Education</h2>
+        <div class="resume-item">
+          <div class="resume-item-main"><span class="resume-item-title">Northeastern University</span><span class="resume-item-sub">Data &amp; System (PhD Fellowship)</span></div>
+        </div>
+        <div class="resume-item">
+          <div class="resume-item-main"><span class="resume-item-title">Harvard University</span><span class="resume-item-sub">Summer School</span></div>
+        </div>
+        <div class="resume-item">
+          <div class="resume-item-main"><span class="resume-item-title">South China University of Technology</span><span class="resume-item-sub">Control Science and Engineering</span></div>
+        </div>
+        <div class="resume-item">
+          <div class="resume-item-main"><span class="resume-item-title">Shenzhen University</span><span class="resume-item-sub">Intelligent System</span></div>
+        </div>
+      </section>
+
+      <section class="resume-section">
+        <h2 class="resume-section-title">Experience</h2>
+        <div class="resume-item">
+          <div class="resume-item-main"><span class="resume-item-title">Robotics Algorithm Engineer</span><span class="resume-item-date">2024 &ndash; 2025</span></div>
+          <div class="resume-item-sub">Pudu Robotics &mdash; X Lab &middot; Robotics algorithm R&amp;D</div>
+        </div>
+        <div class="resume-item">
+          <div class="resume-item-main"><span class="resume-item-title">Research Engineer</span><span class="resume-item-date">2023 &ndash; 2024</span></div>
+          <div class="resume-item-sub">Tencent &mdash; Robotics X &middot; Research on robotic manipulation and learning</div>
+        </div>
+        <div class="resume-item">
+          <div class="resume-item-main"><span class="resume-item-title">Robotic Arm Algorithm R&amp;D Engineer</span><span class="resume-item-date">2022 &ndash; 2023</span></div>
+          <div class="resume-item-sub">Xpeng Robotics (Intern) &middot; Mentor: Dr. Chen Xiangyu</div>
+        </div>
+        <div class="resume-item">
+          <div class="resume-item-main"><span class="resume-item-title">Robotics Researcher</span><span class="resume-item-date">2021 &ndash; 2022</span></div>
+          <div class="resume-item-sub">IDEA &mdash; Greater Bay Area Digital Economy Research Institute (Intern) &middot; Mentor: Dr. Zhang Lei (IEEE Fellow)</div>
+        </div>
+      </section>
+
+      <section class="resume-section">
+        <h2 class="resume-section-title">Selected Publications</h2>
+        <ol class="resume-pub-list" id="resume-pub-list"></ol>
+      </section>
+
+      <section class="resume-section resume-two-col">
+        <div>
+          <h2 class="resume-section-title">Skills</h2>
+          <p class="resume-skill-label">Tools &amp; Languages</p>
+          <p class="resume-skill-line">ROS1 &amp; ROS2, Python, C++, Git, Java, SolidWorks, 3D Print</p>
+          <p class="resume-skill-label">Robot Models</p>
+          <p class="resume-skill-line">Franka Research 3, ABB, Kinova, G1, Flexiv, Humanoid Robot</p>
+        </div>
+        <div>
+          <h2 class="resume-section-title">Academic Service</h2>
+          <ul class="resume-bullet-list">
+            <li>Vice Chair of 2026 IEEE Summit</li>
+            <li>Reviewer: ICRA, CoRL, IROS</li>
+            <li>Reviewer: IEEE Trans. on Human-Machine Systems</li>
+            <li>Reviewer: ACM Intl. Conf. on Human-Robot Interaction</li>
+            <li>Reviewer: IEEE Intl. Conf. on Intelligent Reality</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="resume-section">
+        <h2 class="resume-section-title">Awards</h2>
+        <ul class="resume-bullet-list">
+          <li>2018 China Robot Competition &mdash; Dance Group First Prize</li>
+          <li>2018 National College Student Mathematical Modeling &mdash; Provincial First Prize</li>
+          <li>2019 National College Student Electronic Design &mdash; Provincial First Prize</li>
+          <li>2017 China Engineering Robot Competition &mdash; Narrow Foot Race Second Prize</li>
+          <li>Shenzhen University Graduate First-class Scholarship</li>
+        </ul>
+      </section>
+    </div>
   </div>
 
   <script>
@@ -955,6 +1249,36 @@
     }
 
     renderPublications();
+
+    function renderResumePublications() {
+      const container = document.getElementById('resume-pub-list');
+      if (!container) return;
+      const html = publications.map(function (pub) {
+        return '<li>' + pub.authors + ' ' + pub.title
+          + ' <span class="resume-pub-venue">' + pub.venue + '</span></li>';
+      }).join('');
+      container.innerHTML = html;
+    }
+
+    renderResumePublications();
+
+    function showResume() {
+      document.body.classList.add('resume-open');
+      document.getElementById('resume-view').hidden = false;
+      window.scrollTo(0, 0);
+    }
+
+    function hideResume() {
+      document.body.classList.remove('resume-open');
+      document.getElementById('resume-view').hidden = true;
+      window.scrollTo(0, 0);
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && document.body.classList.contains('resume-open')) {
+        hideResume();
+      }
+    });
   </script>
 </body>
 
