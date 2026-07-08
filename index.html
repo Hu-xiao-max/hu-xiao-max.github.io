@@ -416,6 +416,11 @@
       transition: transform 0.25s, box-shadow 0.25s;
     }
 
+    .pub-gif-wrap video {
+      background: #0f172a;
+      object-fit: cover;
+    }
+
     .pub-gif-wrap img:hover,
     .pub-gif-wrap video:hover {
       transform: scale(1.03);
@@ -951,7 +956,7 @@
               <span>System Integration</span>
             </div>
           </div>
-          <video class="robot-video" autoplay muted loop playsinline preload="metadata">
+          <video class="robot-video" autoplay muted loop playsinline preload="metadata" poster="./images/selfdesignrobot-poster.jpg">
             <source src="./images/selfdesignrobot.webm" type="video/webm">
             <source src="./images/selfdesignrobot.mp4" type="video/mp4">
             Your browser does not support the video tag.
@@ -1046,6 +1051,7 @@
         venue: 'IROS 2026',
         webm: './images/uniprototype_iros26.webm',
         mp4: './images/uniprototype_iros26.mp4',
+        poster: './images/uniprototype_iros26-poster.jpg',
         mp4Height: 180
       },
       {
@@ -1064,6 +1070,7 @@
         venue: 'Submitted CoRL 2026',
         webm: './images/unfold_corl.webm',
         mp4: './images/unfold_corl.mp4',
+        poster: './images/unfold_corl-poster.jpg',
         mp4Height: 180
       },
       
@@ -1166,6 +1173,46 @@
     }
 
     renderPublications();
+
+    /**
+     * ── 移动端视频自动播放增强 ──
+     * 手机浏览器（尤其 iOS）会限制同时自动播放的视频数量，且省电/省流量模式下
+     * 常常阻止自动播放。这里改为「进入视口才播放、离开视口暂停」，并在被浏览器
+     * 拒绝时静默兜底（poster 会一直显示，不会出现白框）。
+     */
+    function setupLazyVideoPlayback() {
+      const videos = Array.from(document.querySelectorAll('video[autoplay]'));
+      if (!videos.length) return;
+
+      const tryPlay = (v) => {
+        const p = v.play();
+        if (p && typeof p.catch === 'function') p.catch(() => {});
+      };
+
+      if (!('IntersectionObserver' in window)) {
+        videos.forEach(tryPlay);
+        return;
+      }
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          const v = entry.target;
+          if (entry.isIntersecting) {
+            tryPlay(v);
+          } else if (!v.paused) {
+            v.pause();
+          }
+        });
+      }, { threshold: 0.25 });
+
+      videos.forEach((v) => {
+        // 交由 observer 控制，避免多个视频同时抢占播放
+        v.autoplay = false;
+        io.observe(v);
+      });
+    }
+
+    setupLazyVideoPlayback();
 
     /**
      * ── Resume 内容单一数据源 ──
