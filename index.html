@@ -697,6 +697,32 @@
     .resume-contact a:hover { text-decoration: underline; }
     .resume-contact span { color: #4b5563; }
 
+    .resume-website {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .resume-website a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .resume-website a:hover { text-decoration: underline; }
+
     .resume-section { margin-bottom: 20px; }
 
     .resume-section-title {
@@ -1246,7 +1272,9 @@
           contactHtml += '<span>' + label + '</span>';
         }
       });
+      const websiteUrl = 'https://hu-xiao-max.github.io/';
       return '<header class="resume-header">'
+        + '<div class="resume-website"><a href="' + websiteUrl + '" target="_blank" rel="noopener">&#127760; Personal Website</a></div>'
         + '<h1 class="resume-name">' + name + '</h1>'
         + (headline ? '<p class="resume-headline">' + headline + '</p>' : '')
         + '<div class="resume-contact">' + contactHtml + '</div>'
