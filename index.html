@@ -439,6 +439,18 @@
       vertical-align: middle;
     }
 
+    .pub-accepted-badge {
+      display: inline-block;
+      background: #fef3c7;
+      color: #b45309;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
     .pub-divider {
       border: none;
       border-top: 2px dashed var(--border);
@@ -1062,7 +1074,8 @@
     /**
      * ── Publication data ──
      * gif/webm/mp4: 填写媒体文件路径即可，有预览媒体的会自动排到前面并显示 Demo。
-     *          留空或不写则排到后面。
+     * accepted: true 会显示 Accepted 标签。
+     * 排序优先级：Demo > Accepted > 数组中的原始顺序。
      *
      * 示例:
      * gif: './images/pub_teleoperation.gif'
@@ -1073,12 +1086,22 @@
     const publications = [
       {
         authors: '<b>Xiao Hu</b>, et al.',
+        title: 'Mind the Delay: Latency Sensitivity and Mitigation in Humanoid Control.',
+        venue: 'Submitted to Humanoids',
+        webm: './images/mind_the_delay.webm',
+        mp4: './images/mind_the_delay.mp4',
+        poster: './images/mind_the_delay-poster.jpg',
+        mp4Width: 320
+      },
+      {
+        authors: '<b>Xiao Hu</b>, et al.',
         title: 'UniPrototype: Human-Robot Skill Learning with Uniform Prototypes.',
         venue: 'IROS 2026',
         webm: './images/uniprototype_iros26.webm',
         mp4: './images/uniprototype_iros26.mp4',
         poster: './images/uniprototype_iros26-poster.jpg',
-        mp4Height: 180
+        mp4Height: 180,
+        accepted: true
       },
       {
         authors: '<b>Xiao Hu</b>, et al.',
@@ -1104,14 +1127,16 @@
         authors: '<b>Xiao Hu</b>, et al.',
         title: 'Tactile-based Reinforcement Learning for Adaptive Grasping under Observation Uncertainties.',
         venue: 'ICRA 2025',
-        gif: './images/sim2real.gif'
+        gif: './images/sim2real.gif',
+        accepted: true
       },
       {
         authors: '<b>Xiao Hu</b>, et al.',
         title: 'Teleoperation of Semi-humanoid with Dexterous Hand.',
         venue: 'i3CE 2025',
         gif: './images/telehumanoid.gif',
-        gifHeight: 180
+        gifHeight: 180,
+        accepted: true
       },
       {
         authors: '<b>Xiao Hu</b>, et al.',
@@ -1133,7 +1158,8 @@
         authors: 'X. Li, Y. Wang, <b>Xiao Hu</b>, et al.',
         title: 'When to Personalize Household Object Search: A Rigidity-Gated Hybrid Policy.',
         venue: 'IROS 2026',
-        gif: ''
+        gif: '',
+        accepted: true
       },
       
       {
@@ -1146,25 +1172,30 @@
         authors: '<b>Xiao Hu</b>.',
         title: 'Autonomous Positioning and Walking Trajectory Planning Method for Construction Robots.',
         venue: 'Caculation 2021',
-        gif: ''
+        gif: '',
+        accepted: true
       }
     ];
 
     function renderPublications() {
-      const withMedia = publications.filter(p => p.gif || p.webm || p.mp4);
-      const withoutMedia = publications.filter(p => !p.gif && !p.webm && !p.mp4);
-      const sorted = [...withMedia, ...withoutMedia];
+      const hasDemo = p => !!(p.gif || p.webm || p.mp4);
+      const sorted = [...publications].sort((a, b) =>
+        Number(hasDemo(b)) - Number(hasDemo(a))
+        || Number(!!b.accepted) - Number(!!a.accepted)
+      );
+      const withMediaCount = publications.filter(hasDemo).length;
 
       const container = document.getElementById('pub-list');
       let html = '';
       let idx = 1;
-      const needDivider = withMedia.length > 0 && withoutMedia.length > 0;
+      const needDivider = withMediaCount > 0 && withMediaCount < publications.length;
 
       sorted.forEach((pub, i) => {
         const hasGif = !!pub.gif;
         const hasVideo = !!(pub.webm || pub.mp4);
         const hasMedia = hasGif || hasVideo;
         const gifBadge = hasMedia ? '<span class="pub-gif-badge">&#9654; Demo</span>' : '';
+        const acceptedBadge = pub.accepted ? '<span class="pub-accepted-badge">Accepted</span>' : '';
         const mediaStyleParts = [];
         const mediaWidth = hasVideo ? (pub.webmWidth || pub.mp4Width || pub.gifWidth) : pub.gifWidth;
         const mediaHeight = hasVideo ? (pub.webmHeight || pub.mp4Height || pub.gifHeight) : pub.gifHeight;
@@ -1181,7 +1212,7 @@
             ? '<div class="pub-gif-wrap"><img src="' + pub.gif + '" alt="Demo" loading="lazy"' + mediaSizeStyle + '></div>'
             : '');
 
-        if (needDivider && i === withMedia.length) {
+        if (needDivider && i === withMediaCount) {
           html += '<hr class="pub-divider">';
         }
 
@@ -1189,7 +1220,7 @@
           + '<span class="pub-num">' + idx + '</span>'
           + '<div>' + pub.authors + ' ' + pub.title
           + ' <span class="pub-venue">' + pub.venue + '</span>'
-          + gifBadge + '</div>'
+          + gifBadge + acceptedBadge + '</div>'
           + gifRow
           + '</div>';
         idx++;
