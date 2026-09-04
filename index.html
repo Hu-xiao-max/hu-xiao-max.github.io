@@ -239,66 +239,63 @@
     .exp-grid {
       display: flex;
       flex-direction: column;
-      gap: 20px;
     }
 
     .exp-card {
+      display: grid;
+      grid-template-columns: 170px minmax(0, 1fr);
+      align-items: center;
+      gap: 28px;
+      min-height: 150px;
+      padding: 26px 0;
+    }
+
+    .exp-card .logo-link {
+      width: 100%;
       display: flex;
-      align-items: flex-start;
-      gap: 20px;
-      padding: 24px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      background: var(--bg);
-      transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
+      align-items: center;
+      justify-content: center;
     }
-
-    .exp-card:hover {
-      box-shadow: 0 8px 30px rgba(0,0,0,0.07);
-      transform: translateY(-2px);
-      border-color: rgba(37,99,235,0.2);
-    }
-
-    .exp-card .logo-link { flex-shrink: 0; }
 
     .exp-card .company-logo {
-      width: 56px;
-      height: 56px;
-      border-radius: 12px;
+      width: 140px;
+      height: 96px;
       object-fit: contain;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
       transition: transform 0.2s;
     }
 
     .exp-card .company-logo:hover { transform: scale(1.06); }
 
-    .exp-card .exp-info { flex: 1; }
+    .exp-card .exp-info {
+      min-width: 0;
+    }
 
-    .exp-card .exp-role {
-      font-size: 1.05rem;
+    .exp-card .exp-heading {
+      line-height: 1.5;
+    }
+
+    .exp-card .exp-role,
+    .exp-card .exp-company {
+      display: inline;
+      font-size: 1rem;
       font-weight: 600;
       color: var(--text);
-      margin-bottom: 2px;
     }
 
-    .exp-card .exp-company {
-      font-size: 0.88rem;
-      color: var(--accent);
-      font-weight: 500;
-    }
+    .exp-card .exp-role::after { content: ', '; }
 
     .exp-card .exp-meta {
-      font-size: 0.82rem;
-      color: var(--text-secondary);
-      margin-top: 6px;
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-top: 9px;
     }
 
     .exp-card .exp-date {
-      font-size: 0.8rem;
+      font-size: 0.86rem;
       color: var(--text-secondary);
       font-weight: 500;
-      white-space: nowrap;
-      margin-top: 4px;
+      font-style: italic;
+      margin-top: 9px;
     }
 
     .edu-timeline {
@@ -882,8 +879,16 @@
       .section { padding: 24px 20px; border-radius: 20px; }
       .robot-showcase { grid-template-columns: 1fr; padding: 20px; }
       .two-col { grid-template-columns: 1fr; gap: 20px; }
-      .exp-card { flex-direction: column; }
-      .exp-card .exp-date { white-space: normal; }
+      .exp-card {
+        grid-template-columns: 100px minmax(0, 1fr);
+        gap: 16px;
+        min-height: 118px;
+        padding: 20px 0;
+      }
+      .exp-card .company-logo {
+        width: 90px;
+        height: 72px;
+      }
       .pub-entry.has-media {
         grid-template-columns: 1fr;
         gap: 14px;
@@ -935,11 +940,13 @@
               <img class="company-logo" src="./images/pudu.svg" alt="Pudu Robotics">
             </a>
             <div class="exp-info">
-              <div class="exp-role">Robotics Algorithm Engineer</div>
-              <div class="exp-company">Pudu Robotics — X Lab</div>
+              <div class="exp-heading">
+                <span class="exp-role">Robotics Algorithm Engineer</span>
+                <span class="exp-company">Pudu Robotics — X Lab</span>
+              </div>
+              <div class="exp-date">2024 – 2025</div>
               <div class="exp-meta">Robotics algorithm R&amp;D</div>
             </div>
-            <div class="exp-date">2024 – 2025</div>
           </div>
 
           <div class="exp-card">
@@ -947,11 +954,13 @@
               <img class="company-logo" src="./images/tencent.svg" alt="Tencent">
             </a>
             <div class="exp-info">
-              <div class="exp-role">Research Engineer</div>
-              <div class="exp-company">Tencent — Robotics X</div>
+              <div class="exp-heading">
+                <span class="exp-role">Research Engineer</span>
+                <span class="exp-company">Tencent — Robotics X</span>
+              </div>
+              <div class="exp-date">2023 – 2024</div>
               <div class="exp-meta">Research on robotic manipulation and learning</div>
             </div>
-            <div class="exp-date">2023 – 2024</div>
           </div>
 
           <div class="exp-card">
@@ -959,23 +968,27 @@
               <img class="company-logo" src="./images/xpeng.svg" alt="XPeng">
             </a>
             <div class="exp-info">
-              <div class="exp-role">Robotic Arm Algorithm R&amp;D Engineer</div>
-              <div class="exp-company">Xpeng Robotics (Intern)</div>
+              <div class="exp-heading">
+                <span class="exp-role">Robotic Arm Algorithm R&amp;D Engineer</span>
+                <span class="exp-company">Xpeng Robotics (Intern)</span>
+              </div>
+              <div class="exp-date">2022 – 2023</div>
               <div class="exp-meta">Mentor: Dr. Chen Xiangyu</div>
             </div>
-            <div class="exp-date">2022 – 2023</div>
           </div>
 
           <div class="exp-card">
             <a class="logo-link" href="https://github.com/idea-research" target="_blank" rel="noopener">
-              <img class="company-logo" src="./images/idea.svg" alt="IDEA">
+              <img class="company-logo" src="./images/idea.jpg" alt="IDEA">
             </a>
             <div class="exp-info">
-              <div class="exp-role">Robotics Researcher</div>
-              <div class="exp-company">IDEA — Greater Bay Area Digital Economy Research Institute (Intern)</div>
+              <div class="exp-heading">
+                <span class="exp-role">Robotics Researcher</span>
+                <span class="exp-company">IDEA — Greater Bay Area Digital Economy Research Institute (Intern)</span>
+              </div>
+              <div class="exp-date">2021 – 2022</div>
               <div class="exp-meta">Mentor: Dr. Zhang Lei (IEEE Fellow)</div>
             </div>
-            <div class="exp-date">2021 – 2022</div>
           </div>
         </div>
       </section>
