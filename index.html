@@ -41,7 +41,7 @@
     .hero {
       padding: 40px 0 36px;
       display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr) auto;
       gap: 30px;
       align-items: center;
       border-bottom: 1px solid var(--border);
@@ -65,7 +65,7 @@
     }
 
     .hero-body h1 {
-      font-size: 2.35rem;
+      font-size: 1.75rem;
       font-weight: 800;
       letter-spacing: -0.04em;
       line-height: 1.06;
@@ -73,9 +73,14 @@
       color: var(--primary);
     }
 
-    .tagline {
+    .hero-bio {
       font-size: 1rem;
       color: var(--text-secondary);
+      max-width: 40em;
+    }
+
+    .hero-bio p + p {
+      margin-top: 10px;
     }
 
     .contact-list {
@@ -721,6 +726,8 @@
         padding: 32px 0;
       }
 
+      .hero-media { order: -1; }
+
       .contact-list {
         justify-content: center;
       }
@@ -732,7 +739,7 @@
       }
 
       .hero { padding: 28px 0; }
-      .hero-body h1 { font-size: 2rem; }
+      .hero-body h1 { font-size: 1.55rem; }
       .avatar { width: 120px; height: 120px; border-radius: 22px; }
       .section { padding: 28px 0; }
       .robot-showcase { grid-template-columns: 1fr; }
@@ -761,12 +768,12 @@
 <body id="top">
   <div class="page-shell">
     <header class="hero">
-      <div class="hero-media">
-        <img class="avatar" src="./images/hx.png" alt="Xiao Hu">
-      </div>
       <div class="hero-body">
         <h1>Xiao Hu</h1>
-        <p class="tagline">PhD at Northeastern University · Reinforcement Learning · Manipulation · Human-Robot Interaction</p>
+        <div class="hero-bio">
+          <p>I&rsquo;m a Second-year Ph.D. student at Northeastern University, focusing on Robot Learning advised by Prof. Gilbert Ye.</p>
+          <p>Previously, I was alumni at the South China University of Technology, collaborating with Lei Zhang.</p>
+        </div>
         <div class="contact-list">
           <a href="mailto:xiao.jeremy.h1@gmail.com">&#9993; xiao.jeremy.h1@gmail.com</a>
           <span>&#9742; +1 857-788-6299</span>
@@ -774,6 +781,9 @@
           <a href="https://hu-xiao-max.github.io/video.xiaohu/" target="_blank" rel="noopener">&#9654; Project Videos</a>
           <a href="#" class="resume-cta" onclick="showResume(); return false;">&#128196; View Resume</a>
         </div>
+      </div>
+      <div class="hero-media">
+        <img class="avatar" src="./images/hx.png" alt="Xiao Hu">
       </div>
     </header>
 
@@ -1160,7 +1170,7 @@
 
     function buildResumeHeader() {
       const name = txt(document.querySelector('.hero-body h1'));
-      const headline = txt(document.querySelector('.hero-body .tagline'));
+      const headline = 'PhD at Northeastern University · Reinforcement Learning · Manipulation · Human-Robot Interaction';
       const items = document.querySelectorAll('.contact-list > a, .contact-list > span');
       let contactHtml = '';
       items.forEach(function (el) {
