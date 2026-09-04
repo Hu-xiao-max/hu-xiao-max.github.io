@@ -17,8 +17,6 @@
       --bg: #ffffff;
       --bg-soft: #f8fafc;
       --border: #dbe3f0;
-      --shadow: 0 22px 60px rgba(15, 23, 42, 0.08);
-      --radius: 24px;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,9 +26,7 @@
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       color: var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(96,165,250,0.22), transparent 32%),
-        linear-gradient(180deg, #e0f2fe 0%, #f8fafc 28%, #f8fafc 100%);
+      background: #fff;
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
@@ -39,23 +35,24 @@
     .page-shell {
       max-width: 980px;
       margin: 0 auto;
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 22px;
+      padding: 0 28px 48px;
     }
 
     .hero {
       position: relative;
       overflow: hidden;
-      padding: 34px 38px;
-      border-radius: 30px;
       background:
         radial-gradient(circle at top right, rgba(96,165,250,0.35), transparent 34%),
         linear-gradient(155deg, #0f172a 0%, #163b6d 56%, #2563eb 100%);
       color: #fff;
-      box-shadow: 0 30px 80px rgba(15, 23, 42, 0.2);
-      border: 1px solid rgba(255,255,255,0.14);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px 28px;
       display: grid;
       grid-template-columns: auto minmax(0, 1fr);
       gap: 30px;
@@ -161,66 +158,19 @@
       border-color: #eff6ff;
     }
 
-    .top-nav {
-      position: sticky;
-      top: 12px;
-      z-index: 20;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      padding: 12px 14px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.82);
-      border: 1px solid rgba(255,255,255,0.68);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
-
-    .top-nav a {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 14px;
-      border-radius: 12px;
-      background: var(--bg-soft);
-      border: 1px solid var(--border);
-      color: var(--text);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 600;
-      transition: transform 0.2s, background 0.2s, border-color 0.2s, color 0.2s;
-    }
-
-    .top-nav a:hover {
-      transform: translateY(-1px);
-      background: #eff6ff;
-      border-color: rgba(37,99,235,0.3);
-      color: var(--accent);
-    }
-
-    .top-nav strong {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--text-secondary);
-    }
-
     .content {
       min-width: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 22px;
     }
 
     .section {
       scroll-margin-top: 24px;
-      padding: 34px 36px;
-      border-radius: var(--radius);
-      background: rgba(255,255,255,0.88);
-      border: 1px solid rgba(255,255,255,0.68);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .section:first-child {
+      border-top: none;
+      padding-top: 36px;
     }
 
     .section-title {
@@ -488,12 +438,6 @@
       grid-template-columns: minmax(0, 0.9fr) minmax(280px, 1.1fr);
       gap: 26px;
       align-items: center;
-      padding: 28px;
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      background:
-        radial-gradient(circle at top left, rgba(96,165,250,0.14), transparent 36%),
-        var(--bg);
     }
 
     .robot-label {
@@ -588,10 +532,7 @@
     }
 
     .list-card {
-      padding: 28px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      background: var(--bg);
+      padding: 0;
     }
 
     .list-card h3 {
@@ -636,6 +577,7 @@
 
     .site-footer a:hover { text-decoration: underline; }
 
+    body.resume-open .hero,
     body.resume-open .page-shell { display: none; }
 
     #resume-view {
@@ -849,19 +791,19 @@
 
     @media (max-width: 1040px) {
       .page-shell {
-        padding: 24px;
+        padding: 0 24px 40px;
       }
 
-      .section { padding: 30px; }
+      .hero-inner { padding: 32px 24px; }
+      .section { padding: 32px 0; }
     }
 
     @media (max-width: 760px) {
-      .hero {
+      .hero-inner {
         grid-template-columns: 1fr;
         justify-items: center;
         text-align: center;
-        padding: 28px 24px;
-        border-radius: 24px;
+        padding: 32px 24px;
       }
 
       .contact-list {
@@ -871,13 +813,14 @@
 
     @media (max-width: 640px) {
       .page-shell {
-        padding: 16px;
+        padding: 0 16px 32px;
       }
 
+      .hero-inner { padding: 28px 16px; }
       .hero-body h1 { font-size: 2rem; }
       .avatar { width: 120px; height: 120px; border-radius: 22px; }
-      .section { padding: 24px 20px; border-radius: 20px; }
-      .robot-showcase { grid-template-columns: 1fr; padding: 20px; }
+      .section { padding: 28px 0; }
+      .robot-showcase { grid-template-columns: 1fr; }
       .two-col { grid-template-columns: 1fr; gap: 20px; }
       .exp-card {
         grid-template-columns: 100px minmax(0, 1fr);
@@ -894,7 +837,6 @@
         gap: 14px;
         align-items: start;
       }
-      .top-nav { justify-content: center; }
       .resume-page { padding: 28px 22px; }
       .resume-two-col { grid-template-columns: 1fr; gap: 16px; }
     }
@@ -902,8 +844,8 @@
 </head>
 
 <body id="top">
-  <div class="page-shell">
-    <header class="hero">
+  <header class="hero">
+    <div class="hero-inner">
       <div class="hero-media">
         <img class="avatar" src="./images/hx.png" alt="Xiao Hu">
       </div>
@@ -919,17 +861,10 @@
           <a href="#" class="resume-cta" onclick="showResume(); return false;">&#128196; View Resume</a>
         </div>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <nav class="top-nav" aria-label="Section navigation">
-      <a href="#experience"><strong>01</strong><span>Experience</span></a>
-      <a href="#education"><strong>02</strong><span>Education</span></a>
-      <a href="#publications"><strong>03</strong><span>Publications</span></a>
-      <a href="#robot"><strong>04</strong><span>Robot Build</span></a>
-      <a href="#more"><strong>05</strong><span>Awards &amp; Service</span></a>
-      <a href="#skills"><strong>06</strong><span>Skills</span></a>
-    </nav>
-
+  <div class="page-shell">
     <main class="content">
       <section class="section" id="experience">
         <h2 class="section-title">Experience</h2>
@@ -1130,7 +1065,7 @@
      */
     const publications = [
       {
-        authors: '<b>Xiao Hu</b>, et al.',
+        authors: '<b>Xiao Hu</b>, Y. H. Wang, G. Ye',
         title: 'Mind the Delay: Latency Sensitivity and Mitigation in Humanoid Control.',
         venue: 'Submitted to Humanoids',
         webm: './images/mind_the_delay.webm',
@@ -1139,7 +1074,7 @@
         mp4Width: 320
       },
       {
-        authors: '<b>Xiao Hu</b>, et al.',
+        authors: '<b>Xiao Hu</b>, Y. F. Yeung, Y. Wang, T. Zhou, F. Xu, J. Du, G. Ye',
         title: 'UniPrototype: Human-Robot Skill Learning with Uniform Prototypes.',
         venue: 'IROS 2026',
         webm: './images/uniprototype_iros26.webm',
@@ -1149,7 +1084,7 @@
         accepted: true
       },
       {
-        authors: '<b>Xiao Hu</b>, et al.',
+        authors: '<b>Xiao Hu</b>, et al., G. Ye',
         title: 'Seeing Points Doing it: Pixel-point State for Real-World RL.',
         venue: 'Submitted CoRL 2026',
         webm: './images/rss26.webm',
