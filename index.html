@@ -364,92 +364,61 @@
 
     .robot-showcase {
       display: grid;
-      grid-template-columns: minmax(0, 0.9fr) minmax(280px, 1.1fr);
-      gap: 26px;
+      grid-template-columns: minmax(0, 1.1fr) minmax(220px, 0.9fr);
+      gap: 20px;
       align-items: center;
     }
 
     .robot-label {
       display: inline-flex;
       align-items: center;
-      margin-bottom: 14px;
-      padding: 5px 10px;
+      margin-bottom: 8px;
+      padding: 4px 8px;
       border-radius: 999px;
       background: #eff6ff;
       color: var(--accent);
-      font-size: 0.74rem;
+      font-size: 0.7rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
     .robot-title {
-      font-size: 1.35rem;
-      line-height: 1.25;
+      font-size: 1.05rem;
+      line-height: 1.35;
       color: var(--primary);
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
 
     .robot-copy {
       color: var(--text-secondary);
-      font-size: 0.94rem;
-      margin-bottom: 18px;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
     }
 
     .robot-highlights {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
     }
 
     .robot-highlights span {
-      padding: 7px 10px;
-      border-radius: 10px;
+      padding: 5px 8px;
+      border-radius: 8px;
       background: var(--bg-soft);
       color: var(--text);
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 600;
       border: 1px solid var(--border);
-    }
-
-    .skill-group-label {
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-secondary);
-      margin: 22px 0 12px;
-    }
-
-    .skill-group-label:first-child { margin-top: 0; }
-
-    .skill-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .skill-tags span {
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: var(--bg-soft);
-      color: var(--text);
-      font-size: 0.85rem;
-      font-weight: 600;
-      border: 1px solid var(--border);
-    }
-
-    .skill-tags.skill-tags-robots span {
-      background: #eff6ff;
-      color: var(--accent);
-      border-color: rgba(37,99,235,0.2);
     }
 
     .robot-video {
       width: 100%;
-      border-radius: 18px;
+      max-height: 220px;
+      object-fit: contain;
+      border-radius: 12px;
       border: 1px solid var(--border);
-      box-shadow: 0 14px 36px rgba(15, 23, 42, 0.12);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
       background: #0f172a;
       display: block;
     }
@@ -780,7 +749,7 @@
         <h1>Xiao Hu</h1>
         <div class="hero-bio">
           <p>I&rsquo;m a second-year Ph.D. student at <a href="https://coe.northeastern.edu/" target="_blank" rel="noopener">Northeastern University</a>, focusing on robot learning, advised by Prof. Gilbert Ye.</p>
-          <p>I previously studied at the <a href="https://en.wikipedia.org/wiki/South_China_University_of_Technology" target="_blank" rel="noopener">South China University of Technology</a>, collaborating with <a href="https://www.leizhang.org/" target="_blank" rel="noopener">Lei Zhang</a>.</p>
+          <p>I previously studied at the <a href="https://en.wikipedia.org/wiki/South_China_University_of_Technology" target="_blank" rel="noopener">South China University of Technology</a>, and have been advised by <a href="https://www.leizhang.org/" target="_blank" rel="noopener">Lei Zhang</a> as an external advisor since then.</p>
         </div>
         <div class="contact-list">
           <a href="mailto:xiao.jeremy.h1@gmail.com">&#9993; xiao.jeremy.h1@gmail.com</a>
@@ -865,16 +834,11 @@
 
       <section class="section" id="robot">
         <h2 class="section-title">Self-Designed Competition Robot</h2>
-        <p class="section-subtitle">From design and fabrication to award-winning performance</p>
         <div class="robot-showcase">
           <div>
             <span class="robot-label">Top 1% · First Prize</span>
-            <h3 class="robot-title">Built two complete robot from concept to competition</h3>
-            <p class="robot-copy">
-              I independently completed the full robot development process, including mechanical design,
-              manufacturing, system integration, and competition deployment. The robot ultimately won
-              First Prize, placing in the top 1% of the competition.
-            </p>
+            <h3 class="robot-title">Built two complete robots from concept to competition</h3>
+            <p class="robot-copy">Independently completed mechanical design, manufacturing, system integration, and competition deployment.</p>
             <div class="robot-highlights" aria-label="Robot project highlights">
               <span>Mechanical Design</span>
               <span>Assembly</span>
@@ -1229,15 +1193,14 @@
     }
 
     function buildResumeSkills() {
-      const labels = document.querySelectorAll('#skills .skill-group-label');
-      if (!labels.length) return '';
+      const groups = [
+        { label: 'Tools & Languages', tags: ['ROS1 & ROS2', 'Python', 'C++', 'Git', 'Java', 'SolidWorks', '3D Print'] },
+        { label: 'Robot Models', tags: ['Franka Research 3', 'ABB', 'Kinova', 'G1', 'Flexiv', 'Humanoid Robot'] }
+      ];
       let inner = '<h2 class="resume-section-title">Skills</h2>';
-      labels.forEach(function (label) {
-        const tagsWrap = label.nextElementSibling;
-        if (!tagsWrap || !tagsWrap.classList.contains('skill-tags')) return;
-        const tags = Array.prototype.map.call(tagsWrap.querySelectorAll('span'), txt).filter(Boolean);
-        inner += '<p class="resume-skill-label">' + txt(label) + '</p>'
-          + '<p class="resume-skill-line">' + tags.join(', ') + '</p>';
+      groups.forEach(function (group) {
+        inner += '<p class="resume-skill-label">' + group.label + '</p>'
+          + '<p class="resume-skill-line">' + group.tags.join(', ') + '</p>';
       });
       return inner;
     }
