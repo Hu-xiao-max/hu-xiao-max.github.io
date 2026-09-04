@@ -359,12 +359,18 @@
       border-bottom: 1px solid var(--border);
       font-size: 0.92rem;
       color: var(--text-secondary);
-      line-height: 1.8;
-      display: flex;
-      gap: 12px;
+      line-height: 1.65;
     }
 
     .pub-entry:last-child { border-bottom: none; }
+
+    .pub-copy {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+    }
 
     .pub-num {
       flex-shrink: 0;
@@ -383,6 +389,27 @@
 
     .pub-entry b { color: var(--text); }
 
+    .pub-details { min-width: 0; }
+
+    .pub-title {
+      color: var(--text);
+      font-size: 0.98rem;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    .pub-authors {
+      margin-top: 4px;
+    }
+
+    .pub-tags {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
     .pub-venue {
       display: inline-block;
       background: #eff6ff;
@@ -391,22 +418,26 @@
       font-weight: 600;
       padding: 2px 8px;
       border-radius: 6px;
-      margin-left: 4px;
       vertical-align: middle;
     }
 
     .pub-entry.has-media {
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: minmax(240px, 320px) minmax(0, 1fr);
+      gap: 20px;
+      align-items: center;
+      padding: 20px 0;
     }
 
     .pub-gif-wrap {
-      flex: 0 0 100%;
-      padding-left: 40px;
-      padding-top: 10px;
+      min-width: 0;
+      display: flex;
+      justify-content: center;
     }
 
     .pub-gif-wrap img,
     .pub-gif-wrap video {
+      display: block;
       width: 280px;
       max-width: 100%;
       border-radius: 10px;
@@ -435,7 +466,6 @@
       font-weight: 600;
       padding: 1px 6px;
       border-radius: 4px;
-      margin-left: 6px;
       vertical-align: middle;
     }
 
@@ -447,7 +477,6 @@
       font-weight: 600;
       padding: 1px 6px;
       border-radius: 4px;
-      margin-left: 6px;
       vertical-align: middle;
     }
 
@@ -855,8 +884,11 @@
       .two-col { grid-template-columns: 1fr; gap: 20px; }
       .exp-card { flex-direction: column; }
       .exp-card .exp-date { white-space: normal; }
-      .pub-entry { flex-direction: column; gap: 10px; }
-      .pub-gif-wrap { padding-left: 0; }
+      .pub-entry.has-media {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        align-items: start;
+      }
       .top-nav { justify-content: center; }
       .resume-page { padding: 28px 22px; }
       .resume-two-col { grid-template-columns: 1fr; gap: 16px; }
@@ -1206,7 +1238,7 @@
         const posterAttr = pub.poster ? ' poster="' + pub.poster + '"' : '';
         const videoSources = (pub.webm ? '<source src="' + pub.webm + '" type="video/webm">' : '')
           + (pub.mp4 ? '<source src="' + pub.mp4 + '" type="video/mp4">' : '');
-        const gifRow = hasVideo
+        const mediaPreview = hasVideo
           ? '<div class="pub-gif-wrap"><video autoplay muted loop playsinline preload="metadata"' + posterAttr + mediaSizeStyle + '>' + videoSources + '</video></div>'
           : (hasGif
             ? '<div class="pub-gif-wrap"><img src="' + pub.gif + '" alt="Demo" loading="lazy"' + mediaSizeStyle + '></div>'
@@ -1217,11 +1249,15 @@
         }
 
         html += '<div class="pub-entry' + (hasMedia ? ' has-media' : '') + '">'
+          + mediaPreview
+          + '<div class="pub-copy">'
           + '<span class="pub-num">' + idx + '</span>'
-          + '<div>' + pub.authors + ' ' + pub.title
-          + ' <span class="pub-venue">' + pub.venue + '</span>'
+          + '<div class="pub-details">'
+          + '<div class="pub-title">' + pub.title + '</div>'
+          + '<div class="pub-authors">' + pub.authors + '</div>'
+          + '<div class="pub-tags"><span class="pub-venue">' + pub.venue + '</span>'
           + gifBadge + acceptedBadge + '</div>'
-          + gifRow
+          + '</div></div>'
           + '</div>';
         idx++;
       });
