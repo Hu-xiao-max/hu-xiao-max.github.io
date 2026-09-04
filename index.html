@@ -71,6 +71,8 @@
       line-height: 1.06;
       margin-bottom: 12px;
       color: var(--primary);
+      max-width: 40em;
+      text-align: center;
     }
 
     .hero-bio {
@@ -79,8 +81,14 @@
       max-width: 40em;
     }
 
-    .hero-bio p + p {
-      margin-top: 10px;
+    .hero-bio a {
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .hero-bio a:hover {
+      text-decoration: underline;
     }
 
     .contact-list {
@@ -771,8 +779,8 @@
       <div class="hero-body">
         <h1>Xiao Hu</h1>
         <div class="hero-bio">
-          <p>I&rsquo;m a Second-year Ph.D. student at Northeastern University, focusing on Robot Learning advised by Prof. Gilbert Ye.</p>
-          <p>Previously, I was alumni at the South China University of Technology, collaborating with Lei Zhang.</p>
+          <p>I&rsquo;m a second-year Ph.D. student at <a href="https://coe.northeastern.edu/" target="_blank" rel="noopener">Northeastern University</a>, focusing on robot learning, advised by Prof. Gilbert Ye.</p>
+          <p>I previously studied at the <a href="https://en.wikipedia.org/wiki/South_China_University_of_Technology" target="_blank" rel="noopener">South China University of Technology</a>, collaborating with <a href="https://www.leizhang.org/" target="_blank" rel="noopener">Lei Zhang</a>.</p>
         </div>
         <div class="contact-list">
           <a href="mailto:xiao.jeremy.h1@gmail.com">&#9993; xiao.jeremy.h1@gmail.com</a>
@@ -906,30 +914,6 @@
               <li>Reviewer: IEEE Intl. Conf. on Intelligent Reality</li>
             </ul>
           </div>
-        </div>
-      </section>
-
-      <section class="section" id="skills">
-        <h2 class="section-title">Skills</h2>
-        <p class="section-subtitle">Tools, languages &amp; robot platforms</p>
-        <p class="skill-group-label">Tools &amp; Languages</p>
-        <div class="skill-tags">
-          <span>ROS1 &amp; ROS2</span>
-          <span>Python</span>
-          <span>C++</span>
-          <span>Git</span>
-          <span>Java</span>
-          <span>SolidWorks</span>
-          <span>3D Print</span>
-        </div>
-        <p class="skill-group-label">Robot Models</p>
-        <div class="skill-tags skill-tags-robots">
-          <span>Franka Research 3</span>
-          <span>ABB</span>
-          <span>Kinova</span>
-          <span>G1</span>
-          <span>Flexiv</span>
-          <span>Humanoid Robot</span>
         </div>
       </section>
 
