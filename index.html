@@ -162,66 +162,174 @@
       margin-bottom: 34px;
     }
 
+    #experience .section-subtitle {
+      margin-bottom: 20px;
+    }
+
     .exp-grid {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      align-items: stretch;
+      padding: 10px 10px 34px;
+      counter-reset: experience;
+      isolation: isolate;
     }
 
     .exp-card {
-      display: grid;
-      grid-template-columns: 170px minmax(0, 1fr);
-      align-items: center;
-      gap: 28px;
-      min-height: 150px;
-      padding: 26px 0;
+      --card-accent: #2563eb;
+      --card-shift: 4px;
+      --card-tilt: -1deg;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 270px;
+      margin-left: -18px;
+      padding: 20px;
+      overflow: hidden;
+      counter-increment: experience;
+      background: linear-gradient(145deg, #ffffff 12%, #f8fafc 100%);
+      border: 1px solid rgba(148, 163, 184, 0.42);
+      border-radius: 22px;
+      box-shadow: 0 16px 34px rgba(15, 23, 42, 0.09), 0 3px 9px rgba(15, 23, 42, 0.05);
+      transform: translateY(var(--card-shift)) rotate(var(--card-tilt));
+      transform-origin: center bottom;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .exp-card:first-child { margin-left: 0; }
+
+    .exp-card:nth-child(2) {
+      --card-accent: #006cb6;
+      --card-shift: 18px;
+      --card-tilt: 0.7deg;
+      z-index: 2;
+    }
+
+    .exp-card:nth-child(3) {
+      --card-accent: #5b4bea;
+      --card-shift: 7px;
+      --card-tilt: -0.45deg;
+      z-index: 3;
+    }
+
+    .exp-card:nth-child(4) {
+      --card-accent: #172554;
+      --card-shift: 15px;
+      --card-tilt: 0.8deg;
+      z-index: 4;
+    }
+
+    .exp-card::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto;
+      height: 4px;
+      background: var(--card-accent);
+    }
+
+    .exp-card::after {
+      content: '0' counter(experience);
+      position: absolute;
+      right: 10px;
+      bottom: -18px;
+      color: rgba(37, 99, 235, 0.055);
+      font-size: 5.4rem;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.08em;
+      pointer-events: none;
+    }
+
+    .exp-card:hover,
+    .exp-card:focus-within {
+      z-index: 10;
+      border-color: rgba(37, 99, 235, 0.35);
+      box-shadow: 0 24px 48px rgba(15, 23, 42, 0.15), 0 5px 14px rgba(15, 23, 42, 0.07);
+      transform: translateY(calc(var(--card-shift) - 10px)) rotate(0deg) scale(1.025);
     }
 
     .exp-card .logo-link {
-      width: 100%;
+      position: relative;
+      z-index: 1;
+      width: 116px;
+      height: 50px;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
+      margin-bottom: 24px;
     }
 
     .exp-card .company-logo {
-      width: 140px;
-      height: 96px;
+      width: 108px;
+      height: 46px;
       object-fit: contain;
+      object-position: left center;
       transition: transform 0.2s;
     }
 
-    .exp-card .company-logo:hover { transform: scale(1.06); }
+    .exp-card:hover .company-logo,
+    .exp-card:focus-within .company-logo {
+      transform: scale(1.06);
+    }
 
     .exp-card .exp-info {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      width: 100%;
       min-width: 0;
     }
 
     .exp-card .exp-heading {
-      line-height: 1.5;
+      position: relative;
+      z-index: 1;
+      line-height: 1.38;
     }
 
-    .exp-card .exp-role,
+    .exp-card .exp-role {
+      display: block;
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.015em;
+    }
+
     .exp-card .exp-company {
-      display: inline;
-      font-size: 1rem;
+      display: block;
+      margin-top: 7px;
+      font-size: 0.76rem;
       font-weight: 600;
-      color: var(--text);
+      color: var(--text-secondary);
+      line-height: 1.45;
     }
-
-    .exp-card .exp-role::after { content: ', '; }
 
     .exp-card .exp-meta {
-      font-size: 0.9rem;
+      position: relative;
+      z-index: 1;
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid rgba(148, 163, 184, 0.28);
+      font-size: 0.74rem;
       color: var(--text);
-      margin-top: 9px;
+      line-height: 1.45;
     }
 
     .exp-card .exp-date {
-      font-size: 0.86rem;
+      position: absolute;
+      z-index: 2;
+      top: 18px;
+      right: 16px;
+      padding: 4px 8px;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.78);
       color: var(--text-secondary);
-      font-weight: 500;
-      font-style: italic;
-      margin-top: 9px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      line-height: 1.2;
+      white-space: nowrap;
     }
 
     .pub-list {
@@ -708,6 +816,26 @@
       .contact-list {
         justify-content: center;
       }
+
+      .exp-grid {
+        display: flex;
+        align-items: stretch;
+        margin: 0 -24px;
+        padding: 10px 32px 36px 24px;
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+        scroll-padding-inline: 24px;
+        scroll-snap-type: inline mandatory;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(148, 163, 184, 0.55) transparent;
+      }
+
+      .exp-card {
+        flex: 0 0 250px;
+        min-height: 264px;
+        margin-left: -14px;
+        scroll-snap-align: start;
+      }
     }
 
     @media (max-width: 640px) {
@@ -721,16 +849,19 @@
       .section { padding: 28px 0; }
       .robot-showcase { grid-template-columns: 1fr; }
       .two-col { grid-template-columns: 1fr; gap: 20px; }
+      #experience .section-subtitle { margin-bottom: 14px; }
+      .exp-grid {
+        margin: 0 -16px;
+        padding-right: 24px;
+        padding-left: 16px;
+        scroll-padding-inline: 16px;
+      }
       .exp-card {
-        grid-template-columns: 100px minmax(0, 1fr);
-        gap: 16px;
-        min-height: 118px;
-        padding: 20px 0;
+        flex-basis: min(76vw, 248px);
+        min-height: 258px;
+        padding: 18px;
       }
-      .exp-card .company-logo {
-        width: 90px;
-        height: 72px;
-      }
+      .exp-card .exp-date { top: 17px; right: 14px; }
       .pub-entry.has-media {
         grid-template-columns: 1fr;
         gap: 14px;
