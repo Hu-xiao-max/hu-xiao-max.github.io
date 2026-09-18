@@ -1032,6 +1032,15 @@
      */
     const publications = [
       {
+        authors: '<b>Xiao Hu</b>, L. Sun, Y. F. Yeung, X. Li, Y. Wang, J. Du, G. Ye',
+        title: 'Where to Start a Dynamic Skill: Learning Object Spinning from Contact Transitions.',
+        venue: 'Submitted to ICRA 2027',
+        webm: './images/spin_contact.webm',
+        mp4: './images/spin_contact.mp4',
+        poster: './images/spin_contact-poster.jpg',
+        mp4Height: 180
+      },
+      {
         authors: '<b>Xiao Hu</b>, Y. H. Wang, G. Ye',
         title: 'Mind the Delay: Latency Sensitivity and Mitigation in Humanoid Control.',
         venue: 'Submitted to Humanoids',
@@ -1316,8 +1325,10 @@
     }
 
     function buildResumePublications() {
-      if (!publications.length) return '';
-      const rows = publications.map(function (pub) {
+      // 简历只列已录用的论文（accepted: true），投稿中/在审的不展示
+      const accepted = publications.filter(function (pub) { return !!pub.accepted; });
+      if (!accepted.length) return '';
+      const rows = accepted.map(function (pub) {
         return '<li>' + pub.authors + ' ' + pub.title
           + ' <span class="resume-pub-venue">' + pub.venue + '</span></li>';
       }).join('');
