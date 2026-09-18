@@ -1251,23 +1251,17 @@
      *   1) 首屏就同时拉取/解码多条视频，带宽和硬件解码器被占满（iOS 尤其明显）；
      *   2) 低电量模式 / 省流量模式会直接拒绝 autoplay，poster 就永远停在那里；
      *   3) 弱网下某条视频 stalled 之后没有任何人重试，于是一直停住。
-     * 对应做法：滚到附近才注入 <source>；同一时刻最多播 MAX_PLAYING 条；
-     * 自动播放被拒时显示 ▶ 按钮并在用户第一次触摸后自动重试；
-     * 后台看门狗发现「在播但时间不前进」就重新 load，切后台则全部暂停。
+     * 对应做法：滚到附近才注入 <source>（首屏不下载任何视频，但不影响播放）；
+     * 只要在视口里就无条件一直自动播放，完全滚出视口才暂停；
+     * 万一被浏览器的自动播放策略拒绝（如 iOS 低电量模式），显示 ▶ 按钮，
+     *   并且每 5s 自动重试一次 + 用户任何一次点击/触摸都会重试，不会一直停着；
+     * 看门狗发现「在播但时间不前进」就重新 load，切后台则全部暂停（回来自动恢复）。
      */
     function setupVideoPlayback() {
       const videos = Array.from(document.querySelectorAll('video[data-managed]'));
       if (!videos.length) return;
 
-      const smallScreen = window.matchMedia('(max-width: 760px)').matches;
-      const MAX_PLAYING = smallScreen ? 1 : 3;   // 手机一次只解码一条
-      const MIN_RATIO = 0.2;
-      const conn = navigator.connection || navigator.webkitConnection || null;
-      const saveData = !!(conn && conn.saveData);
-      const slowNet = !!(conn && /2g/.test(conn.effectiveType || ''));
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      // 省流量 / 2G / 减少动态效果：不自动播，但给出 ▶ 让用户自己点，而不是卡着不动
-      const autoAllowed = !(saveData || slowNet || reduceMotion);
+      const MIN_RATIO = 0.01;                    // 露出一点就播
 
       const state = new Map();
       const S = (v) => state.get(v);
@@ -1360,24 +1354,18 @@
       function queueReconcile() {
         if (queued) return;
         queued = true;
-        requestAnimationFrame(function () { queued = false; reconcile(); });
+        // 用 setTimeout 而不是 requestAnimationFrame：页面静止时 rAF 可能长时间不回调，
+        // 会出现「鼠标移到视频上引发重绘，视频才开始播」的现象
+        setTimeout(function () { queued = false; reconcile(); }, 0);
       }
 
       function reconcile() {
         if (document.visibilityState === 'hidden') return;
-        const ranked = videos
-          .filter(function (v) { return S(v).ratio >= MIN_RATIO; })
-          .sort(function (a, b) { return S(b).ratio - S(a).ratio; });
-        const active = ranked.slice(0, MAX_PLAYING);
-        const activeSet = new Set(active);
-
-        videos.forEach(function (v) { if (!activeSet.has(v)) halt(v); });
-
-        active.forEach(function (v) {
+        videos.forEach(function (v) {
           const s = S(v);
-          if (s.userPaused) return;
-          if (!autoAllowed && !s.userStarted) { hydrate(v); markBlocked(v, true); return; }
-          if (v.paused) play(v);
+          if (s.ratio < MIN_RATIO) { halt(v); return; }   // 完全滚出视口才暂停
+          if (s.userPaused) return;                        // 只有用户自己点过暂停才不播
+          if (v.paused) play(v);                           // 其余一律自动播；被浏览器拒绝会每 5s 重试
         });
       }
 
@@ -1448,14 +1436,16 @@
         }, { rootMargin: '300px 0px' });
 
         const io = new IntersectionObserver(function (entries) {
-          entries.forEach(function (e) { S(e.target).ratio = e.intersectionRatio; });
+          entries.forEach(function (e) {
+            S(e.target).ratio = e.isIntersecting ? Math.max(e.intersectionRatio, MIN_RATIO) : 0;
+          });
           queueReconcile();
-        }, { threshold: [0, 0.2, 0.4, 0.6, 0.8, 1] });
+        }, { rootMargin: '100px 0px', threshold: [0, 0.25, 0.5, 1] });
 
         videos.forEach(function (v) { warm.observe(v); io.observe(v); });
       } else {
-        // 老浏览器：没有 IO 就退化成「按文档顺序播前 MAX_PLAYING 条」，而不是全开
-        videos.forEach(function (v) { S(v).ratio = 1; });
+        // 老浏览器没有 IntersectionObserver：直接全部当作可见，一律播放
+        videos.forEach(function (v) { S(v).ratio = 1; hydrate(v); });
         queueReconcile();
       }
 
@@ -1467,7 +1457,7 @@
           if (s.host.classList.contains('needs-tap')) { s.userStarted = true; play(v); }
         });
       }
-      ['touchend', 'click', 'keydown'].forEach(function (ev) {
+      ['pointerdown', 'touchend', 'click', 'keydown'].forEach(function (ev) {
         window.addEventListener(ev, retryBlocked, { passive: true });
       });
 
