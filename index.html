@@ -1545,24 +1545,43 @@
       return '<section class="resume-section"><h2 class="resume-section-title">Education</h2>' + rows + '</section>';
     }
 
+    /*
+     * 仅简历展示、不在主界面显示的经历。
+     * 按时间倒序排在 #experience 卡片之前。
+     */
+    const resumeOnlyExperience = [
+      {
+        role: 'Research Scientist',
+        company: 'Stealth AI',
+        meta: 'Boston, United States',
+        date: 'May 2026 – Sep 2026'
+      }
+    ];
+
+    function resumeExperienceRow(item) {
+      const subParts = [item.company, item.meta].filter(Boolean).join(' · ');
+      return '<div class="resume-item">'
+        + '<div class="resume-item-main">'
+        + '<span class="resume-item-title">' + item.role + '</span>'
+        + (item.date ? '<span class="resume-item-date">' + item.date + '</span>' : '')
+        + '</div>'
+        + (subParts ? '<div class="resume-item-sub">' + subParts + '</div>' : '')
+        + '</div>';
+    }
+
     function buildResumeExperience() {
       const cards = document.querySelectorAll('#experience .exp-card');
-      if (!cards.length) return '';
-      let rows = '';
-      cards.forEach(function (card) {
-        const role = txt(card.querySelector('.exp-role'));
-        const company = txt(card.querySelector('.exp-company'));
-        const meta = txt(card.querySelector('.exp-meta'));
-        const date = txt(card.querySelector('.exp-date'));
-        const subParts = [company, meta].filter(Boolean).join(' · ');
-        rows += '<div class="resume-item">'
-          + '<div class="resume-item-main">'
-          + '<span class="resume-item-title">' + role + '</span>'
-          + (date ? '<span class="resume-item-date">' + date + '</span>' : '')
-          + '</div>'
-          + (subParts ? '<div class="resume-item-sub">' + subParts + '</div>' : '')
-          + '</div>';
+      const items = resumeOnlyExperience.slice();
+      Array.prototype.forEach.call(cards, function (card) {
+        items.push({
+          role: txt(card.querySelector('.exp-role')),
+          company: txt(card.querySelector('.exp-company')),
+          meta: txt(card.querySelector('.exp-meta')),
+          date: txt(card.querySelector('.exp-date'))
+        });
       });
+      if (!items.length) return '';
+      const rows = items.map(resumeExperienceRow).join('');
       return '<section class="resume-section"><h2 class="resume-section-title">Experience</h2>' + rows + '</section>';
     }
 
