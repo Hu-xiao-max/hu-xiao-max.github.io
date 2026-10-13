@@ -678,10 +678,40 @@
     }
 
     .resume-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 28px;
+      align-items: center;
       text-align: center;
       padding-bottom: 16px;
       border-bottom: 2px solid #1f2937;
       margin-bottom: 20px;
+    }
+
+    .resume-header-main { min-width: 0; }
+
+    .resume-qr {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    .resume-qr img {
+      width: 132px;
+      height: 132px;
+      display: block;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+    }
+
+    .resume-qr-label {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #6b7280;
+      letter-spacing: 0.02em;
     }
 
     .resume-name {
@@ -899,6 +929,9 @@
       }
       .resume-page { padding: 28px 22px; }
       .resume-two-col { grid-template-columns: 1fr; gap: 16px; }
+      .resume-header { grid-template-columns: 1fr; gap: 14px; }
+      .resume-qr { margin: 0 auto; }
+      .resume-qr img { width: 116px; height: 116px; }
     }
   </style>
 </head>
@@ -1528,10 +1561,16 @@
       });
       const websiteUrl = 'https://hu-xiao-max.github.io/';
       return '<header class="resume-header">'
+        + '<div class="resume-header-main">'
         + '<div class="resume-website"><a href="' + websiteUrl + '" target="_blank" rel="noopener">&#127760; Personal Website</a></div>'
         + '<h1 class="resume-name">' + name + '</h1>'
         + (headline ? '<p class="resume-headline">' + headline + '</p>' : '')
         + '<div class="resume-contact">' + contactHtml + '</div>'
+        + '</div>'
+        + '<a class="resume-qr" href="' + websiteUrl + '" target="_blank" rel="noopener">'
+        + '<img src="./images/website-qr.svg" alt="QR code for personal website" width="132" height="132">'
+        + '<span class="resume-qr-label">Scan for website</span>'
+        + '</a>'
         + '</header>';
     }
 
