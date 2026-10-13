@@ -728,6 +728,9 @@
       font-style: italic;
     }
 
+    .resume-headline a { color: var(--accent); text-decoration: none; }
+    .resume-headline a:hover { text-decoration: underline; }
+
     .resume-contact {
       margin-top: 10px;
       display: flex;
@@ -1543,7 +1546,11 @@
 
     function buildResumeHeader() {
       const name = txt(document.querySelector('.hero-body h1'));
-      const headline = 'PhD at Northeastern University · Reinforcement Learning · Manipulation · Human-Robot Interaction';
+      // 与首页介绍保持一致：直接从 .hero-bio 读取（保留超链接），首页改了简历自动同步
+      const headline = Array.prototype.map.call(
+        document.querySelectorAll('.hero-bio p'),
+        function (p) { return p.innerHTML.replace(/\s+/g, ' ').trim(); }
+      ).join(' ');
       const items = document.querySelectorAll('.contact-list > a, .contact-list > span');
       let contactHtml = '';
       items.forEach(function (el) {
@@ -1569,7 +1576,7 @@
         + '</div>'
         + '<a class="resume-qr" href="' + websiteUrl + '" target="_blank" rel="noopener">'
         + '<img src="./images/website-qr.svg" alt="QR code for personal website" width="132" height="132">'
-        + '<span class="resume-qr-label">Scan for website</span>'
+        + '<span class="resume-qr-label">Scan or click to visit</span>'
         + '</a>'
         + '</header>';
     }
@@ -1646,7 +1653,8 @@
 
     function buildResumeSkills() {
       const groups = [
-        { label: 'Tools & Languages', tags: ['ROS1 & ROS2', 'Python', 'C++', 'Git', 'Java', 'SolidWorks', '3D Print'] },
+        { label: 'Research Areas', tags: ['Reinforcement Learning', 'Sim2Real', 'Imitation Learning', 'Robot Manipulation'] },
+        { label: 'Tools & Languages', tags: ['PyTorch', 'ROS1 & ROS2', 'Python', 'C++', 'Git', 'Java', 'SolidWorks', '3D Print'] },
         { label: 'Robot Models', tags: ['Franka Research 3', 'ABB', 'Kinova', 'G1', 'Flexiv', 'Humanoid Robot'] }
       ];
       let inner = '<h2 class="resume-section-title">Skills</h2>';
