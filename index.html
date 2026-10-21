@@ -1194,6 +1194,17 @@
       },
 
       {
+        authors: 'Y. Wang*, H. Zhu, <b>Xiao Hu</b>, H. Zhang, Z. Wang, Y. F. Yeung, D. Zhao, L. Sun',
+        title: 'KPI: A Promptable Kernel for Physical Interaction on Humanoids.',
+        venue: 'CoRL 2026',
+        webm: './images/kpi_humanoid.webm',
+        mp4: './images/kpi_humanoid.mp4',
+        poster: './images/kpi_humanoid-poster.jpg',
+        mp4Height: 180,
+        accepted: true
+      },
+
+      {
         authors: 'X. Li, Y. Wang, <b>Xiao Hu</b>, et al.',
         title: 'When to Personalize Household Object Search: A Rigidity-Gated Hybrid Policy.',
         venue: 'IROS 2026',
@@ -1230,8 +1241,12 @@
 
     function renderPublications() {
       const hasDemo = p => !!(p.gif || p.webm || p.mp4);
+      // 一作判定：authors 以加粗的 Xiao Hu 开头
+      const isFirstAuthor = p => /^\s*<b>Xiao Hu<\/b>/.test(p.authors || '');
+      // 排序：一作+有视频 > 其他有视频 > 无视频；同组内已接收的优先
+      const rank = p => hasDemo(p) ? (isFirstAuthor(p) ? 0 : 1) : 2;
       const sorted = [...publications].sort((a, b) =>
-        Number(hasDemo(b)) - Number(hasDemo(a))
+        rank(a) - rank(b)
         || Number(!!b.accepted) - Number(!!a.accepted)
       );
       const withMediaCount = publications.filter(hasDemo).length;
