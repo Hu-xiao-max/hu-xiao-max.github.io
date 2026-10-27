@@ -92,6 +92,11 @@
       text-decoration: underline;
     }
 
+    .hl-name {
+      color: var(--accent-light);
+      font-weight: 600;
+    }
+
     .contact-list {
       margin-top: 20px;
       display: flex;
@@ -383,6 +388,16 @@
       font-size: 0.98rem;
       font-weight: 400;
       line-height: 1.5;
+    }
+
+    .pub-title a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .pub-title a:hover {
+      color: var(--accent);
+      text-decoration: underline;
     }
 
     .pub-authors {
@@ -958,7 +973,7 @@
       <div class="hero-body">
         <h1>Xiao Hu</h1>
         <div class="hero-bio">
-          <p>I&rsquo;m a second-year Ph.D. student at <a href="https://coe.northeastern.edu/" target="_blank" rel="noopener">Northeastern University</a>, focusing on robot learning, advised by Prof. Gilbert Ye and collaborating closely with <a href="https://en.wikipedia.org/wiki/Seth_A._Hutchinson" target="_blank" rel="noopener">Prof. Seth Hutchinson</a>.</p>
+          <p>I&rsquo;m a second-year Ph.D. student at <a href="https://coe.northeastern.edu/" target="_blank" rel="noopener">Northeastern University</a>, focusing on robot learning, advised by <span class="hl-name">Prof. Gilbert Ye</span> and collaborating closely with <a href="https://en.wikipedia.org/wiki/Seth_A._Hutchinson" target="_blank" rel="noopener">Prof. Seth Hutchinson</a>.</p>
           <p>I previously studied at the <a href="https://en.wikipedia.org/wiki/South_China_University_of_Technology" target="_blank" rel="noopener">South China University of Technology</a>, and have been advised by <a href="https://www.leizhang.org/" target="_blank" rel="noopener">Lei Zhang</a> as an external advisor since then.</p>
         </div>
         <div class="contact-list">
@@ -1171,7 +1186,7 @@
       },
       
       {
-        authors: '<b>Xiao Hu</b>, et al.',
+        authors: '<b>Xiao Hu</b>, G. Ye',
         title: 'Tactile-based Reinforcement Learning for Adaptive Grasping under Observation Uncertainties.',
         venue: 'ICRA 2025',
         webm: './images/sim2real.webm',
@@ -1181,8 +1196,9 @@
         accepted: true
       },
       {
-        authors: '<b>Xiao Hu</b>, et al.',
+        authors: '<b>Xiao Hu</b>, Y. M. Shi, G. Ye',
         title: 'Teleoperation of Semi-humanoid with Dexterous Hand.',
+        url: 'https://ascelibrary.org/doi/10.1061/9780784486443.062',
         venue: 'i3CE 2025',
         webm: './images/telehumanoid.webm',
         mp4: './images/telehumanoid.mp4',
@@ -1197,7 +1213,7 @@
         gif: ''
       },
       {
-        authors: '<b>Xiao Hu</b>, et al.',
+        authors: '<b>Xiao Hu</b>, G. Ye',
         title: 'Physics-Grounded Rapid Grasp Pose Synthesis for Novel Objects',
         venue: 'Advanced Robotics Research',
         webm: './images/grasp.webm',
@@ -1305,7 +1321,9 @@
           + '<div class="pub-copy">'
           + '<span class="pub-num">' + idx + '</span>'
           + '<div class="pub-details">'
-          + '<div class="pub-title">' + pub.title + '</div>'
+          + '<div class="pub-title">' + (pub.url
+            ? '<a href="' + pub.url + '" target="_blank" rel="noopener">' + pub.title + '</a>'
+            : pub.title) + '</div>'
           + '<div class="pub-authors">' + pub.authors + '</div>'
           + '<div class="pub-tags"><span class="pub-venue">' + pub.venue + '</span>'
           + gifBadge + acceptedBadge + '</div>'
